@@ -26,6 +26,4 @@ pub trait EntitySet {
     fn query (&self) -> bool {
         false
     }
-    
-    
 }

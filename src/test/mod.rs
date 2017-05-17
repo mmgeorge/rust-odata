@@ -1,5 +1,4 @@
 
-
 #[cfg(test)]
 mod test {
     use entity::{Entity, EntityBuilder};
@@ -13,7 +12,7 @@ mod test {
         fn declare (&self) -> Entity {
             let product = EntityBuilder::new("Product")
                 .add("name", Edm::Type::String)
-                .add("id", Edm::Type::String)
+                .add("id",   Edm::Type::String)
                 .build();
 
             product

@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["edm",""],["entity",""],["entity_set",""],["service",""]]});
