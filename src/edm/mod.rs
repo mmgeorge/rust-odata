@@ -1,9 +1,8 @@
-
-
+//! This module includes type information for a handful of Edm types.
+//! Notably the date types are not yet implemented.
 
 pub mod Edm {
 
-    
     pub enum Type {
         Boolean,
         Byte,
@@ -22,6 +21,7 @@ pub mod Edm {
         //Time: Timespan
     }
 
+    
     #[derive(Clone)]
     pub enum Value {
         Boolean(bool),
@@ -41,7 +41,9 @@ pub mod Edm {
         //Time: Timespan
     }
 
-
+    
+    /// Convert an Edm::Type to the underlying Rust type using the compound
+    /// Edm::Value enum. 
     pub fn toValue (ty : &Type) -> Value {
         match ty {
             Boolean => Value::Boolean(false),

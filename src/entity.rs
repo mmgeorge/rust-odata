@@ -1,14 +1,4 @@
 
-// Property::new("name", "edm.string");
-// entityset.entity("dksd-sdfz").property("value").get("name");
-// entity.property("value").set("x");
-// entity.property("is20").declare(Edm::Boolean);
-// entity.add("is20", Edm::Boolean);
-// pub fn<T: Debug> getType (T: value) {
-//     println!("{:?}", value);
-// }
-
-
 use std::collections::HashMap;
 use edm::Edm;
 use std::clone::Clone;
@@ -19,7 +9,6 @@ pub struct Property {
     name: String,
     value: Edm::Value, 
 }
-
 
 type PropertyMap = HashMap<String, Property>;
 
@@ -46,7 +35,7 @@ impl Entity {
 }
 
 
-/// Construct a new Entity type. For use with in the declare function of an
+/// Constructs a new Entity type. For use with in the declare function of an
 /// EntitySet
 pub struct EntityBuilder {
     name: String, 
@@ -80,3 +69,7 @@ impl EntityBuilder {
 }
 
 
+// Hacky way to get type? 
+// pub fn<T: Debug> getType (T: value) {
+//     println!("{:?}", value);
+// }
