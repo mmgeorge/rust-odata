@@ -5,3 +5,4 @@ authors = ["Matt George <matt@mattgeorge.net>"]
 
 [dependencies]
 serde_json = "1.0"
+chrono     = "0.3.1"

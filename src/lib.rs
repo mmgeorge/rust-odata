@@ -106,10 +106,12 @@
 //! [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx
 
 extern crate serde_json; 
+extern crate chrono;
 
 pub mod edm;
 pub mod entity;
 pub mod entity_set;
+pub mod worker;
 pub mod service;
 pub mod test;
 
