@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["edm",""],["entity",""],["entity_set",""],["service",""]]});
+initSidebarItems({"mod":[["edm","This module includes type information for a handful of Edm types. Notably the date types are not yet implemented."],["entity",""],["entity_set",""],["service",""],["worker","Worker module service spawns a thread that creates a new Worker to litsen to the TCP socket and handle the request."]]});

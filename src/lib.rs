@@ -55,19 +55,12 @@
 //! One idea is to instead use the Rust builder paradigm to specify entity types, ie.
 //!
 //! ```
-//! let product = EntityBuilder::new("Product")
-//!     .add("id",   Edm::Type::String)
-//!     .add("name", Edm::Type::String)
-//!     .build();
 //! ```
 //!
 //! where each .add() creates a new property for the specified Entity. This could also
 //! be expanded to include a validation policies:
 //!
 //! ```
-//! let policy = Validation::new(|x| (x < 10) && (x > 0));
-//! validation.add(|x| x mod 2);
-//! product.add("age", Edm::Type::Int32, policy);
 //! ```
 //! 
 //! EntitySet could then be a trait, with a `declare` function used to specify the entity
@@ -77,23 +70,7 @@
 //! to specify some kind of error and return it). 
 //!
 //! ```
-//! impl EntitySet for TestProducts {
-//!
-//!     fn declare (&self) -> Entity {
-//!         let product = EntityBuilder::new("Product")
-//!             .add("id",   Edm::Type::String)
-//!             .add("name", Edm::Type::String)
-//!             .build();
-//!         product
-//!     }
-//!
-//!     fn create (&self, data: JSON<or generic obj?>) -> bool {
-//!         // do something with input ...
-//!         true
-//!     }
-//!
-//!     fn read ...
-//! }
+//! 
 //!
 //! ```
 //!
@@ -105,12 +82,24 @@
 //! [ODATA]: http://www.odata.org
 //! [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx
 
-extern crate serde_json; 
+#[macro_use]
+extern crate serde_derive;
+
+#[macro_use]
+extern crate lazy_static;
+extern crate serde;
+extern crate serde_json;
+
 extern crate chrono;
 
 pub mod edm;
+pub mod property;
+#[macro_use]
 pub mod entity;
+
+#[macro_use]
 pub mod entity_set;
+pub mod model;
 pub mod worker;
 pub mod service;
 pub mod test;

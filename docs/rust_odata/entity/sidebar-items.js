@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Entity","Entity type definition. Create using EntityBuilder."],["EntityBuilder","Construct a new Entity type. For use with in the declare function of an EntitySet"],["Property","Structure for holding property values for an Entity"]]});
+initSidebarItems({"struct":[["Entity","Entity type definition. Create using EntityBuilder."],["EntityBuilder","Constructs a new Entity type. For use with in the declare function of an EntitySet"],["Property","Structure for holding property values for an Entity"]]});

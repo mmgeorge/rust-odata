@@ -2,74 +2,50 @@
 use std::collections::HashMap;
 use edm::Edm;
 use std::clone::Clone;
+use property::Property;
 
-/// Structure for holding property values for an Entity
-#[derive(Clone)]
-pub struct Property {
-    name: String,
-    value: Edm::Value, 
+
+macro_rules! rust_type {
+    (Int64) => { i64 };
 }
 
-type PropertyMap = HashMap<String, Property>;
 
-/// Entity type definition. Create using EntityBuilder.
-pub struct Entity {
-    name: String, 
-    properties: PropertyMap,
-}
+/// Declare a new Entity
+#[macro_export]
+macro_rules! defEntity {
+    ($name:ident {
+        $( $key:ident : $prop_type:ident ),*
+    }) => {
+        
+        #[derive(Serialize, Deserialize, Debug)]
+        struct $name {
+            $( $key : rust_type!($prop_type) ),* // add OR clause here? 
+        }
 
-impl Entity {
+        impl $name {
+            pub fn new($($key : rust_type!($prop_type)),*) -> $name {
+                $name {
+                    $( $key : $key ),*
+                }
+            }
+        }
 
-    /// Entity constructor. Generally this shoudl not be called directly
-    /// and EntityBuilder used instead. 
-    pub fn new(name: &str, properties: PropertyMap) -> Self {
-        Entity {
-            name: String::from(name),
-            properties: properties
+        impl Entity for $name {
+            //pub fn get_key 
+            fn describe() -> Vec<Property> {
+                println!("Describing entity!");
+                vec![$(Property::new(
+                    stringify!($key),
+                    stringify!($prop_type))),*]
+            }
         }
     }
-    
-    pub fn property(&self, key: &str) -> &Property {
-        &self.properties[key]
-    }
 }
 
 
-/// Constructs a new Entity type. For use with in the declare function of an
-/// EntitySet
-pub struct EntityBuilder {
-    name: String, 
-    properties: PropertyMap,
+pub trait Entity {
+    /// Used to expose fields to model. Passed-up to Model through EntitySet
+    fn describe() -> Vec<Property>; 
 }
 
 
-impl EntityBuilder {
-
-    pub fn new(name: &str) -> Self {
-        EntityBuilder {
-            name: String::from(name),
-            properties: PropertyMap::new()
-        }
-    }
-    
-    pub fn add (&mut self, key: &str, ty: Edm::Type) -> &mut Self {
-        self.properties.insert(
-            String::from(key),
-            Property {
-                name: String::from(key),
-                value: Edm::toValue(&ty)
-            });
-        self
-    }
-
-    pub fn build(&self) -> Entity {
-        let entity = Entity::new(&self.name, self.properties.clone());
-        entity
-    }
-}
-
-
-// Hacky way to get type? 
-// pub fn<T: Debug> getType (T: value) {
-//     println!("{:?}", value);
-// }

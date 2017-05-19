@@ -158,6 +158,8 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Rust oData</span>
 <span class='doccomment'>//! Rust oData is library for building [oData][ODATA] REST services in Rust.</span>
@@ -267,10 +269,12 @@
 <span class='doccomment'>//! [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_json</span>; 
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>chrono</span>;
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>edm</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>entity</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>entity_set</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>worker</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>service</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>test</span>;
 

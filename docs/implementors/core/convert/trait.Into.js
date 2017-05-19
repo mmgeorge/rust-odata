@@ -1,4 +1,7 @@
 (function() {var implementors = {};
+implementors["chrono"] = [];
+implementors["libc"] = [];
+implementors["num"] = [];
 implementors["serde"] = [];
 
             if (window.register_implementors) {

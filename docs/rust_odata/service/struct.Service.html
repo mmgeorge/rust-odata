@@ -48,8 +48,14 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rust_odata/service.rs.html#26-29' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Service { /* fields omitted */ }</pre></section>
+               </span><a class='srclink' href='../../src/rust_odata/service.rs.html#12-16' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Service { /* fields omitted */ }</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../rust_odata/service/struct.Service.html' title='rust_odata::service::Service'>Service</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rust_odata/service.rs.html#19-91' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, port: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; Self</code></span></h4>
+<div class='docblock'><p>Create a new oData service. Uses a TcpListener for underlying
+socket represetnation.</p>
+</div><h4 id='method.serve' class='method'><span id='serve.v' class='invisible'><code>fn <a href='#method.serve' class='fnname'>serve</a>(&amp;mut self)</code></span></h4>
+<div class='docblock'><p>Spawn a worker thread to process the request</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

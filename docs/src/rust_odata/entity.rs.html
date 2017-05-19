@@ -118,24 +118,7 @@
 <span id="73">73</span>
 <span id="74">74</span>
 <span id="75">75</span>
-<span id="76">76</span>
-<span id="77">77</span>
-<span id="78">78</span>
-<span id="79">79</span>
-<span id="80">80</span>
-<span id="81">81</span>
-<span id="82">82</span>
 </pre><pre class='rust '>
-
-<span class='comment'>// Property::new(&quot;name&quot;, &quot;edm.string&quot;);</span>
-<span class='comment'>// entityset.entity(&quot;dksd-sdfz&quot;).property(&quot;value&quot;).get(&quot;name&quot;);</span>
-<span class='comment'>// entity.property(&quot;value&quot;).set(&quot;x&quot;);</span>
-<span class='comment'>// entity.property(&quot;is20&quot;).declare(Edm::Boolean);</span>
-<span class='comment'>// entity.add(&quot;is20&quot;, Edm::Boolean);</span>
-<span class='comment'>// pub fn&lt;T: Debug&gt; getType (T: value) {</span>
-<span class='comment'>//     println!(&quot;{:?}&quot;, value);</span>
-<span class='comment'>// }</span>
-
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>edm</span>::<span class='ident'>Edm</span>;
@@ -147,7 +130,6 @@
     <span class='ident'>name</span>: <span class='ident'>String</span>,
     <span class='ident'>value</span>: <span class='ident'>Edm</span>::<span class='ident'>Value</span>, 
 }
-
 
 <span class='kw'>type</span> <span class='ident'>PropertyMap</span> <span class='op'>=</span> <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Property</span><span class='op'>&gt;</span>;
 
@@ -174,7 +156,7 @@
 }
 
 
-<span class='doccomment'>/// Construct a new Entity type. For use with in the declare function of an</span>
+<span class='doccomment'>/// Constructs a new Entity type. For use with in the declare function of an</span>
 <span class='doccomment'>/// EntitySet</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EntityBuilder</span> {
     <span class='ident'>name</span>: <span class='ident'>String</span>, 
@@ -208,6 +190,10 @@
 }
 
 
+<span class='comment'>// Hacky way to get type? </span>
+<span class='comment'>// pub fn&lt;T: Debug&gt; getType (T: value) {</span>
+<span class='comment'>//     println!(&quot;{:?}&quot;, value);</span>
+<span class='comment'>// }</span>
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
