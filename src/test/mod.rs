@@ -5,12 +5,10 @@ mod test {
 
     use property::Property;
     use edm::Edm;
-
     use entity::{Entity, EntityDescr};
     use entity_set::{EntitySet, EntitySetDescr};
     use model::{Model, ModelBuilder};
-
-    use service::{Service, ServiceBuilder}; 
+    use service::{Service, ServiceBuilder};
 
     
     defEntity!(Dog(keys => id, name) {
@@ -29,18 +27,16 @@ mod test {
     #[test]
     fn runme () {
         // Create oData model
-        let m: Model = ModelBuilder::new()
+        let m: Model = ModelBuilder::new("")
             .add(Dogs::declare())
             .build();
 
-        // Create oData service for model
-        let s: Service = ServiceBuilder::new("ProductService", 8080)
-            .model(m)
-            .log(false)
+        let s: Service = ServiceBuilder::new("gateway")
+            .add(m)
             .build();
-
-        // Start server
+        
         s.start();
+        
 //        println!("{}", serde_json::to_string_pretty(m.get_metadata()).unwrap());
         panic!();
     }

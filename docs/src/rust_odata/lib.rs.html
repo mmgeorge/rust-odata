@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -153,13 +153,6 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
-<span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Rust oData</span>
 <span class='doccomment'>//! Rust oData is library for building [oData][ODATA] REST services in Rust.</span>
@@ -218,19 +211,12 @@
 <span class='doccomment'>//! One idea is to instead use the Rust builder paradigm to specify entity types, ie.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! let product = EntityBuilder::new(&quot;Product&quot;)</span>
-<span class='doccomment'>//!     .add(&quot;id&quot;,   Edm::Type::String)</span>
-<span class='doccomment'>//!     .add(&quot;name&quot;, Edm::Type::String)</span>
-<span class='doccomment'>//!     .build();</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! where each .add() creates a new property for the specified Entity. This could also</span>
 <span class='doccomment'>//! be expanded to include a validation policies:</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! let policy = Validation::new(|x| (x &lt; 10) &amp;&amp; (x &gt; 0));</span>
-<span class='doccomment'>//! validation.add(|x| x mod 2);</span>
-<span class='doccomment'>//! product.add(&quot;age&quot;, Edm::Type::Int32, policy);</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! </span>
 <span class='doccomment'>//! EntitySet could then be a trait, with a `declare` function used to specify the entity</span>
@@ -240,23 +226,7 @@
 <span class='doccomment'>//! to specify some kind of error and return it). </span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! impl EntitySet for TestProducts {</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!     fn declare (&amp;self) -&gt; Entity {</span>
-<span class='doccomment'>//!         let product = EntityBuilder::new(&quot;Product&quot;)</span>
-<span class='doccomment'>//!             .add(&quot;id&quot;,   Edm::Type::String)</span>
-<span class='doccomment'>//!             .add(&quot;name&quot;, Edm::Type::String)</span>
-<span class='doccomment'>//!             .build();</span>
-<span class='doccomment'>//!         product</span>
-<span class='doccomment'>//!     }</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!     fn create (&amp;self, data: JSON&lt;or generic obj?&gt;) -&gt; bool {</span>
-<span class='doccomment'>//!         // do something with input ...</span>
-<span class='doccomment'>//!         true</span>
-<span class='doccomment'>//!     }</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!     fn read ...</span>
-<span class='doccomment'>//! }</span>
+<span class='doccomment'>//! </span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//!</span>
@@ -268,14 +238,30 @@
 <span class='doccomment'>//! [ODATA]: http://www.odata.org</span>
 <span class='doccomment'>//! [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx</span>
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_json</span>; 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>chrono</span>;
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_derive</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde</span>;
 
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_json</span>;
+
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>crossbeam</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>chrono</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>hyper</span>;
+    
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>edm</span>;
+
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>property</span>;
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>entity</span>;
+
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>entity_set</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>worker</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>model</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>service</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>service_handler</span>;
+
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>test</span>;
 
 </pre>

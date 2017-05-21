@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["EntitySet",""]]});
+initSidebarItems({"trait":[["EntitySet",""],["EntitySetDescr",""]]});

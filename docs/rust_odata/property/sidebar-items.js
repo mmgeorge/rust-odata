@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Property","Structure for holding property values for an Entity"]]});

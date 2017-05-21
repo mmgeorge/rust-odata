@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Type",""],["Value",""]],"fn":[["toValue","Convert an Edm::Type to the underlying Rust type using the compound Edm::Value enum. "]]});
+initSidebarItems({"enum":[["Type",""]],"fn":[["format",""],["from",""],["ty",""]]});

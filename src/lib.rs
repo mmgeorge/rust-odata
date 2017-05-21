@@ -91,7 +91,8 @@ extern crate serde_json;
 
 extern crate crossbeam;
 extern crate chrono;
-
+extern crate hyper;
+    
 #[macro_use]
 pub mod edm;
 
@@ -102,7 +103,8 @@ pub mod entity;
 #[macro_use]
 pub mod entity_set;
 pub mod model;
-pub mod worker;
 pub mod service;
+pub mod service_handler;
+
 pub mod test;
 
