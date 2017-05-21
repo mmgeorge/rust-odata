@@ -5,15 +5,34 @@ use std::clone::Clone;
 use property::Property;
 
 
-macro_rules! rust_type {
-    (Int64) => { i64 };
+pub struct EntityDescr {
+    pub name: String,
+    pub keys: Vec<String>, 
+    pub properties: Vec<Property>,
+}
+
+impl EntityDescr {
+    pub fn name(&self) -> &str
+    {
+        &self.name
+    }
+
+    pub fn keys(&self) -> &[String]
+    {
+        &self.keys
+    }
+
+    pub fn properties(&self) -> &[Property]
+    {
+        &self.properties
+    }
 }
 
 
 /// Declare a new Entity
 #[macro_export]
 macro_rules! defEntity {
-    ($name:ident {
+    ($name:ident( keys => $($key_name:ident),* ) {
         $( $key:ident : $prop_type:ident ),*
     }) => {
         
@@ -21,7 +40,7 @@ macro_rules! defEntity {
         struct $name {
             $( $key : rust_type!($prop_type) ),* // add OR clause here? 
         }
-
+        
         impl $name {
             pub fn new($($key : rust_type!($prop_type)),*) -> $name {
                 $name {
@@ -31,12 +50,14 @@ macro_rules! defEntity {
         }
 
         impl Entity for $name {
-            //pub fn get_key 
-            fn describe() -> Vec<Property> {
-                println!("Describing entity!");
-                vec![$(Property::new(
-                    stringify!($key),
-                    stringify!($prop_type))),*]
+            fn describe() -> EntityDescr {
+                EntityDescr {
+                    name: String::from(stringify!($name)),
+                    keys: vec![$(String::from(stringify!($key_name))),*],
+                    properties: vec![$(Property::new(
+                        stringify!($key),
+                        Edm::from(stringify!($prop_type)))),*] 
+                }
             }
         }
     }
@@ -45,7 +66,7 @@ macro_rules! defEntity {
 
 pub trait Entity {
     /// Used to expose fields to model. Passed-up to Model through EntitySet
-    fn describe() -> Vec<Property>; 
+    fn describe() -> EntityDescr; 
 }
 
 

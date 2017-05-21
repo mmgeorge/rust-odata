@@ -1,34 +1,55 @@
 
-use entity::Entity;
+use entity::{Entity, EntityDescr};
 use model::Model;
+use serde_json;
 
-//pub trait Ke // Property type ?
+type Json = serde_json::Value;
+type QueryOpt = String;
 
-//type Json = serde_json::Value;
-//
 
 #[macro_export]
 macro_rules! defEntitySet {
     ($name:ident, $entity:ident) => {
-        struct $name {
-            data: Vec<$entity>
+
+        struct $name { }
+        
+        impl $name {
+            fn declare() -> $name
+            {
+                $name { }
+            } 
+            
+            fn parse(value: &str) -> $entity
+            {
+                serde_json::from_str(value).expect("Could not deserialize entity")
+            }
         }
 
-        impl $name {
-            fn describe() -> (String, Vec<Property>) {
-                (String::from(stringify!($name)), $entity::describe())
+        impl EntitySetDescr for $name {
+            fn name(&self) -> String
+            {
+                String::from(stringify!($name))
+            }
+
+            fn descriptor(&self) -> EntityDescr
+            {
+                $entity::describe()
             }
         }
     }
 } 
 
 
+pub trait EntitySetDescr {
+    fn name(&self) -> String;
+    fn descriptor(&self) -> EntityDescr; 
+}
+
+
 pub trait EntitySet {
     
 }
 
-
-type QueryOpt = String;
 
 
 //pub trait EntitySet {

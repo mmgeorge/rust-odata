@@ -1,28 +1,50 @@
 
 #[cfg(test)]
 mod test {
-    use entity::Entity;
-    use property::Property;
-    use model::Model;
-    
-    // use entity_set::EntitySet;
-    // use edm::Edm;
+    use serde_json;
 
-    defEntity!(Dog {
-        key: Int64
+    use property::Property;
+    use edm::Edm;
+
+    use entity::{Entity, EntityDescr};
+    use entity_set::{EntitySet, EntitySetDescr};
+    use model::{Model, ModelBuilder};
+
+    use service::{Service, ServiceBuilder}; 
+
+    
+    defEntity!(Dog(keys => id, name) {
+        id: Int64,
+        name: String,
+        age: Int16
     });
 
     defEntitySet!(Dogs, Dog);
 
+    impl EntitySet for Dogs {
+        
+    }
+
+
     #[test]
     fn runme () {
-        let mut m = Model::new();
-        m.add(Dogs::describe());
+        // Create oData model
+        let m: Model = ModelBuilder::new()
+            .add(Dogs::declare())
+            .build();
 
+        // Create oData service for model
+        let s: Service = ServiceBuilder::new("ProductService", 8080)
+            .model(m)
+            .log(false)
+            .build();
 
-        //Dogs::describe();
+        // Start server
+        s.start();
+//        println!("{}", serde_json::to_string_pretty(m.get_metadata()).unwrap());
         panic!();
     }
+
     
     // struct TestProducts { }
     
