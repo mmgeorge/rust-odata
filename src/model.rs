@@ -102,10 +102,8 @@ impl ModelBuilder {
     
 
     pub fn build(&mut self) -> Model {
-        let mut name = String::new();
-        let mut reg = Vec::new();
-        mem::swap(&mut self.registry, &mut reg);
-        mem::swap(&mut self.name, &mut name);
+        let reg = mem::replace(&mut self.registry, Vec::new());
+        let name = mem::replace(&mut self.name, String::new());
         
         let mut model = Model {
             name: name,
