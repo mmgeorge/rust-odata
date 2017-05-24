@@ -4,7 +4,7 @@ mod test {
     use serde_json;
 
     use property::Property;
-    use edm::Edm;
+    use edm::edm;
     use entity::{Entity, EntityDescr};
     use entity_set::{EntitySet, EntitySetDescr};
     use model::{Model, ModelBuilder};
@@ -35,10 +35,10 @@ mod test {
             .add(m)
             .build();
         
-        s.start();
+        //s.start();
+        //        println!("{}", serde_json::to_string_pretty(m.get_metadata()).unwrap());
         
-//        println!("{}", serde_json::to_string_pretty(m.get_metadata()).unwrap());
-        panic!();
+        unimplemented!();
     }
 
     

@@ -1,12 +1,11 @@
 
-use std::collections::HashMap;
-use std::iter::repeat;
-use std::mem;
+//use std::collections::HashMap;
+//use std::iter::repeat;
 use std::marker::Sync;
 
-use property::Property; 
+//use property::Property; 
 use entity_set::{EntitySet, EntitySetDescr};
-use serde_json::*;
+use serde_json::Value;
 
 
 pub struct Model {

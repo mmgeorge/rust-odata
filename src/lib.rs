@@ -82,8 +82,9 @@
 //! [ODATA]: http://www.odata.org
 //! [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx
 
-#[macro_use]
-extern crate serde_derive;
+
+
+//extern crate serde_derive;
 extern crate serde;
 
 #[macro_use]

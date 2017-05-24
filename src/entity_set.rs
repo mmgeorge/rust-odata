@@ -1,12 +1,16 @@
 
 use entity::{Entity, EntityDescr};
-use model::Model;
-use serde_json;
+use property::Property;
+use serde_json::Value;
 
-type Json = serde_json::Value;
-type QueryOpt = String;
-
-
+/// defEntitySet!(name: ident, entity_type: ident)
+/// Defines a macro for declaring EntitySets. For instance, 
+/// ```
+/// defEntitySet!(Dogs, Dog); 
+/// ```
+/// Declares an EntitySet named "Dogs" that consistes of elements
+/// of Entity Dog. CRUD-Q operations are then exposed via implementation of the
+/// EntitySet trait for struct. 
 #[macro_export]
 macro_rules! defEntitySet {
     ($name:ident, $entity:ident) => {
@@ -46,50 +50,49 @@ pub trait EntitySetDescr {
 }
 
 
-pub trait EntitySet {
-    
+#[derive(Debug)]
+pub enum SvcError {
+    NoImplementation
 }
 
+pub trait EntitySet {
 
-
-//pub trait EntitySet {
-
-    // fn create<E> (&self, object: E) -> Result(E)
-    //     where E: Entity
-    // {
-    //     false
-    // }
+    fn create<E> (&self, _object: E) -> Result<E, SvcError>
+        where E: Entity
+    {
+        unimplemented!();
+    }
     
 
-    // fn read<K, E> (&self, key: K) -> Result(E)
-    //     where K: Key,
-    //           E: Entity
-    // {
-    //     // ... do something
-    // }
+    fn read<E> (&self, _key: Property) -> Result<E, SvcError>
+        where E: Entity
+    {
+        unimplemented!();
+    }
 
     
-    // fn read_list<E: Entity> (&self) -> Result(Vec<E>)
-    // {
-    //     Err(NOT_IMPL)
-    // }
+    fn read_list<E: Entity> (&self) -> Result<Vec<E>, SvcError>
+    {
+        unimplemented!();
+    }
     
 
-    // fn update (&self, raw: Json) -> Result(None)
-    // {
-    //     false
-    // }
+    fn update<E> (&self, _json: Value) -> Result<E, SvcError>
+        where E: Entity
+    {
+        unimplemented!();
+    }
     
 
-    // fn delete<K> (&self, key: K) -> Result(None)
-    //     where K: Key
-    // {
-    //     false
-    // }
+    fn delete<E> (&self, _key: Property) -> Result<E, SvcError>
+        where E: Entity
+    {
+        unimplemented!();
+    }
 
     
-    // fn query (&self, params: Vec<QueryOpt>) -> Result(Vec<E>)
+    // fn query (&self, params: Vec<QueryOpt>) -> Result<Vec<E>, SvcError>
     // {
-    //     false
+    //     unimplemented!();
     // }
-//}
+}

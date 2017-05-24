@@ -1,15 +1,15 @@
 
-use edm::Edm;
+use edm::edm;
 
 /// Structure for holding property values for an Entity
 pub struct Property {
     name: String,
-    ptype: Edm::Type,
+    ptype: edm::Type,
 } 
 
 
 impl Property {
-    pub fn new (name: &str, ptype: Edm::Type) -> Property
+    pub fn new (name: &str, ptype: edm::Type) -> Property
     {
         Property {
             name: String::from(name),
@@ -24,12 +24,12 @@ impl Property {
 
     pub fn types (&self) -> Vec<&str>
     {
-        Edm::ty(&self.ptype)
+        edm::ty(&self.ptype)
     }
 
     
     pub fn format (&self) -> &str
     {
-        Edm::format(&self.ptype)
+        edm::format(&self.ptype)
     }
 }

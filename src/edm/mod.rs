@@ -17,7 +17,7 @@ macro_rules! rust_type {
 }
 
 
-pub mod Edm {
+pub mod edm {
 
     pub enum Type {
         Boolean,
@@ -64,7 +64,6 @@ pub mod Edm {
             &Type::Int32 => vec!["integer"],
             &Type::Int64 => vec!["integer"],
             &Type::String => vec!["string"],
-            _ => panic!()
         }
     }
 
@@ -79,7 +78,6 @@ pub mod Edm {
             &Type::Int32 => "int32",
             &Type::Int64 => "int64",
             &Type::String => "",
-            _ => panic!()
         }
     }
 }
