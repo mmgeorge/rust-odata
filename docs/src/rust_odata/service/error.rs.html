@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/service/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `src/service/error.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
-    <title>mod.rs.html -- source</title>
+    <title>error.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
@@ -51,17 +51,15 @@
 <span id="6">6</span>
 <span id="7">7</span>
 <span id="8">8</span>
-<span id="9">9</span>
 </pre><pre class='rust '>
 
-<span class='kw'>mod</span> <span class='ident'>service</span>;
-<span class='kw'>mod</span> <span class='ident'>handler</span>;
-<span class='kw'>mod</span> <span class='ident'>error</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>service</span>::<span class='ident'>Service</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>service</span>::<span class='ident'>ServiceBuilder</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>error</span>::<span class='ident'>Error</span>;
-
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Error</span> {
+    <span class='ident'>NoImpl</span>,
+    <span class='ident'>InvalidRoot</span>,
+    <span class='ident'>InvalidModel</span>, 
+}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

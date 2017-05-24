@@ -10,7 +10,7 @@ use service::handler::ServiceHandler;
 /// An instance of an oData service that will serve each model it possesses. Construct
 /// using a ServiceBuilder. 
 pub struct Service {
-    name : Arc<String>,
+    root : Arc<String>,
     models: Arc<HashMap<String, Model>>,
 }
 
@@ -22,6 +22,7 @@ impl Service {
     {
         // let test = "helloworld";
         let handler = ServiceHandler {
+            root  : self.root.clone(),
             models: self.models.clone()
         };
         
@@ -30,6 +31,7 @@ impl Service {
 }
 
 
+/// Constructs an instance of a Service. 
 pub struct ServiceBuilder {
     name: String,
     models: HashMap<String, Model>
@@ -48,7 +50,7 @@ impl ServiceBuilder {
 
     pub fn add(mut self, model: Model) -> Self
     {
-        self.models.insert(String::from("test"), model);
+        self.models.insert(String::from(model.get_name()), model);
         self
     }
 
@@ -56,7 +58,7 @@ impl ServiceBuilder {
     pub fn build(self) -> Service
     {
         Service {
-            name: Arc::new(self.name),
+            root: Arc::new(self.name),
             models: Arc::new(self.models),
         }
     }

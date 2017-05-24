@@ -1,6 +1,8 @@
 
 
 use entity::{Entity, EntityDescr, Property};
+use service::Error;
+    
 use serde_json::Value;
 
 

@@ -25,14 +25,17 @@ mod test {
     #[test]
     fn runme () {
         // Create oData model
-        let m: Model = ModelBuilder::new("")
+        let m: Model = ModelBuilder::new("dog_cafe.svc")
             .add(Dogs::declare())
             .build();
 
         let s: Service = ServiceBuilder::new("gateway")
             .add(m)
             .build();
-        
+
+        // Starts server -- this isn't really a unit test.
+        // --Should now be able to make a GET to <root>/gateway/dog_cafe.svc/Dogs
+        // --Everything else should print error
         s.start();
         //        println!("{}", serde_json::to_string_pretty(m.get_metadata()).unwrap());
         

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Service","An instance of an oData service that will serve each model it possesses. Construct using a ServiceBuilder. "],["ServiceBuilder",""]]});
+initSidebarItems({"enum":[["Error",""]],"struct":[["Service","An instance of an oData service that will serve each model it possesses. Construct using a ServiceBuilder. "],["ServiceBuilder","Constructs an instance of a Service."]]});

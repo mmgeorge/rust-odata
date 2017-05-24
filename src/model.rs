@@ -1,27 +1,36 @@
 
-//use std::collections::HashMap;
-//use std::iter::repeat;
 use std::marker::Sync;
 
-//use property::Property; 
 use entity::*;
 use serde_json::Value;
 
 
+/// Registry for storing metadata for each included
+/// EntitySet. Keys denote EntitySets, Values each EntitySets'
+/// respective properties.
 pub struct Model {
-    /// Registery for storing metadata for each included
-    /// EntitySet. Keys denote EntitySets, Values each EntitySets'
-    /// respective properties.
     name: String,
     registry: Vec<Box<EntitySetDescr>>,
     metadata: Value
 }
 
-unsafe impl Sync for Model { }
-unsafe impl Send for Model { }
+unsafe impl Sync for Model {}
+unsafe impl Send for Model {}
 
 impl Model {
 
+    /// Lookup specified descriptor
+    pub fn lookup(&self, name: &str) -> Option<&Box<EntitySetDescr>>
+    {
+        for entry in &self.registry {
+            if entry.name() == name {
+                return Some(&entry)
+            }
+        }
+        None
+    }
+
+    
     /// Renders the metadata document description of the oData Model
     pub fn render(&mut self)
     {
@@ -71,6 +80,13 @@ impl Model {
     pub fn get_metadata(&self) -> &Value
     {
         &self.metadata
+    }
+
+
+    /// Getter for model name
+    pub fn get_name(&self) -> &str
+    {
+        &self.name
     }
 }
 

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `EntitySetDescr` trait in crate `rust_odata`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, EntitySetDescr">
+    <meta name="description" content="API documentation for the Rust `Error` enum in crate `rust_odata`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Error">
 
-    <title>rust_odata::entity::EntitySetDescr - Rust</title>
+    <title>rust_odata::service::Error - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>rust_odata</a>::<wbr><a href='index.html'>entity</a></p><script>window.sidebarCurrent = {name: 'EntitySetDescr', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>rust_odata</a>::<wbr><a href='index.html'>service</a></p><script>window.sidebarCurrent = {name: 'Error', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,26 +43,21 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rust_odata</a>::<wbr><a href='index.html'>entity</a>::<wbr><a class='trait' href=''>EntitySetDescr</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>rust_odata</a>::<wbr><a href='index.html'>service</a>::<wbr><a class='enum' href=''>Error</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rust_odata/entity/entity_set.rs.html#51-54' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait EntitySetDescr {
-    fn <a href='#tymethod.name' class='fnname'>name</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>;
-    fn <a href='#tymethod.descriptor' class='fnname'>descriptor</a>(&amp;self) -&gt; <a class='struct' href='../../rust_odata/entity/struct.EntityDescr.html' title='rust_odata::entity::EntityDescr'>EntityDescr</a>;
-}</pre><div class='docblock'><p>Internal descriptor for an EntitySet for usage by the Model. Provides access
-to the underlying desciptor for the EntityType.</p>
-</div>
-            <h2 id='required-methods'>Required Methods</h2>
-            <div class='methods'>
-        <h3 id='tymethod.name' class='method'><span id='name.v' class='invisible'><code>fn <a href='#tymethod.name' class='fnname'>name</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></h3><h3 id='tymethod.descriptor' class='method'><span id='descriptor.v' class='invisible'><code>fn <a href='#tymethod.descriptor' class='fnname'>descriptor</a>(&amp;self) -&gt; <a class='struct' href='../../rust_odata/entity/struct.EntityDescr.html' title='rust_odata::entity::EntityDescr'>EntityDescr</a></code></span></h3></div>
-        <h2 id='implementors'>Implementors</h2>
-        <ul class='item-list' id='implementors-list'>
-    </ul><script type="text/javascript" async
-                         src="../../implementors/rust_odata/entity/trait.EntitySetDescr.js">
-                 </script></section>
+               </span><a class='srclink' href='../../src/rust_odata/service/error.rs.html#4-8' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Error {
+    NoImpl,
+    InvalidRoot,
+    InvalidModel,
+}</pre><h2 class='variants'>Variants</h2>
+<span id='variant.NoImpl' class='variant'><span id='NoImpl.v' class='invisible'><code>NoImpl</code></span></span><span id='variant.InvalidRoot' class='variant'><span id='InvalidRoot.v' class='invisible'><code>InvalidRoot</code></span></span><span id='variant.InvalidModel' class='variant'><span id='InvalidModel.v' class='invisible'><code>InvalidModel</code></span></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../rust_odata/service/enum.Error.html' title='rust_odata::service::Error'>Error</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rust_odata/service/error.rs.html#3' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
