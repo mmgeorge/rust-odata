@@ -1,14 +1,14 @@
 
 use std::collections::HashMap;
 use std::sync::Arc;
-use std::mem;
-
 use hyper::server::Server;
 
 use model::Model;
 use service::handler::ServiceHandler;
 
 
+/// An instance of an oData service that will serve each model it possesses. Construct
+/// using a ServiceBuilder. 
 pub struct Service {
     name : Arc<String>,
     models: Arc<HashMap<String, Model>>,
@@ -17,11 +17,11 @@ pub struct Service {
 
 impl Service {
 
+    /// Begin accepting requests. 
     pub fn start(&self)
     {
         // let test = "helloworld";
         let handler = ServiceHandler {
-            name : "test",
             models: self.models.clone()
         };
         
@@ -53,17 +53,11 @@ impl ServiceBuilder {
     }
 
 
-    pub fn build(mut self) -> Service
+    pub fn build(self) -> Service
     {
-        let mut models = HashMap::new();
-        let mut name   = String::new();
-        mem::swap(&mut self.models, &mut models);
-        mem::swap(&mut self.name, &mut name);
-        
         Service {
-            name: Arc::new(name),
-            models: Arc::new(models),
+            name: Arc::new(self.name),
+            models: Arc::new(self.models),
         }
-
     }
 }

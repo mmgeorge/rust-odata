@@ -48,12 +48,18 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/rust_odata/entity_set.rs.html#11-40' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/rust_odata/entity/entity_set.rs.html#16-45' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>defEntitySet</span> {
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>entity</span>:<span class='ident'>ident</span>) <span class='op'>=&gt;</span> { ... };
 }</pre>
-</section>
+<div class='docblock'><p>defEntitySet!(name: ident, entity_type: ident)
+Defines a macro for declaring EntitySets. For instance, 
+<code>defEntitySet!(Dogs, Dog);</code>
+Declares an EntitySet named &quot;Dogs&quot; that consistes of elements
+of Entity Dog. CRUD-Q operations are then exposed via implementation of the
+EntitySet trait for struct. </p>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

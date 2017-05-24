@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `model.rs`.">
+    <meta name="description" content="Source to the Rust file `src/model.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>model.rs.html -- source</title>
@@ -155,22 +155,15 @@
 <span id="110">110</span>
 <span id="111">111</span>
 <span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
 </pre><pre class='rust '>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>repeat</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
+<span class='comment'>//use std::collections::HashMap;</span>
+<span class='comment'>//use std::iter::repeat;</span>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>Sync</span>;
 
-<span class='kw'>use</span> <span class='ident'>property</span>::<span class='ident'>Property</span>; 
-<span class='kw'>use</span> <span class='ident'>entity_set</span>::{<span class='ident'>EntitySet</span>, <span class='ident'>EntitySetDescr</span>};
-<span class='kw'>use</span> <span class='ident'>serde_json</span>::<span class='kw-2'>*</span>;
+<span class='comment'>//use property::Property; </span>
+<span class='kw'>use</span> <span class='ident'>entity</span>::<span class='kw-2'>*</span>;
+<span class='kw'>use</span> <span class='ident'>serde_json</span>::<span class='ident'>Value</span>;
 
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Model</span> {
@@ -265,15 +258,10 @@
     }
     
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Model</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>reg</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-        <span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>registry</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>reg</span>);
-        <span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>name</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>name</span>);
-        
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Model</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>model</span> <span class='op'>=</span> <span class='ident'>Model</span> {
-            <span class='ident'>name</span>: <span class='ident'>name</span>,
-            <span class='ident'>registry</span>: <span class='ident'>reg</span>,
+            <span class='ident'>name</span>: <span class='self'>self</span>.<span class='ident'>name</span>,
+            <span class='ident'>registry</span>: <span class='self'>self</span>.<span class='ident'>registry</span>,
             <span class='ident'>metadata</span>: <span class='macro'>json</span><span class='macro'>!</span>({<span class='string'>&quot;None&quot;</span>: <span class='string'>&quot;None&quot;</span>})
         };
         <span class='ident'>model</span>.<span class='ident'>render</span>();

@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `defEntity` macro in crate `rust_odata`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, defEntity">
+    <meta name="description" content="Source to the Rust file `src/service/mod.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
 
-    <title>rust_odata::defEntity - Rust</title>
+    <title>mod.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
     
 
     
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>rust_odata</a></p><script>window.sidebarCurrent = {name: 'defEntity', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        
     </nav>
 
     <nav class="sub">
@@ -43,20 +43,23 @@
         </form>
     </nav>
 
-    <section id='main' class="content macro">
-<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>rust_odata</a>::<wbr><a class='macro' href=''>defEntity</a></span><span class='out-of-band'><span id='render-detail'>
-                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                       [<span class='inner'>&#x2212;</span>]
-                   </a>
-               </span><a class='srclink' href='../src/rust_odata/entity/entity.rs.html#34-64' title='goto source code'>[src]</a></span></h1>
-<pre class='rust macro'>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>defEntity</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>:<span class='ident'>ident</span>( <span class='ident'>keys</span> <span class='op'>=&gt;</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>key_name</span>:<span class='ident'>ident</span>),<span class='op'>*</span> ) {
-        $( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>key</span>:<span class='ident'>ident</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prop_type</span>:<span class='ident'>ident</span> ),<span class='op'>*</span>
-    }) <span class='op'>=&gt;</span> { ... };
-}</pre>
-<div class='docblock'><p>Declare a new Entity</p>
-</div></section>
+    <section id='main' class="content source"><pre class="line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+</pre><pre class='rust '>
+
+<span class='kw'>mod</span> <span class='ident'>service</span>;
+<span class='kw'>mod</span> <span class='ident'>handler</span>;
+
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>service</span>::<span class='ident'>Service</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>service</span>::<span class='ident'>ServiceBuilder</span>;
+
+</pre>
+</section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -110,11 +113,11 @@
     
 
     <script>
-        window.rootPath = "../";
+        window.rootPath = "../../../";
         window.currentCrate = "rust_odata";
     </script>
-    <script src="../jquery.js"></script>
-    <script src="../main.js"></script>
-    <script defer src="../search-index.js"></script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
 </body>
 </html>

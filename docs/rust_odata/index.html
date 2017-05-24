@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/rust_odata/lib.rs.html#1-109' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/rust_odata/lib.rs.html#1-108' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
 <h1 id='rust-odata' class='section-header'><a href='#rust-odata'>Rust oData</a></h1>
 <p>Rust oData is library for building <a href="http://www.odata.org">oData</a> REST services in Rust.
@@ -149,13 +149,6 @@ OASIS: <a href="http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/od
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='entity_set/index.html'
-                                  title='rust_odata::entity_set'>entity_set</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class='mod' href='model/index.html'
                                   title='rust_odata::model'>model</a></td>
                            <td class='docblock-short'>
@@ -163,22 +156,8 @@ OASIS: <a href="http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/od
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='property/index.html'
-                                  title='rust_odata::property'>property</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class='mod' href='service/index.html'
                                   title='rust_odata::service'>service</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='mod' href='service_handler/index.html'
-                                  title='rust_odata::service_handler'>service_handler</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
@@ -195,7 +174,12 @@ OASIS: <a href="http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/od
                            <td><a class='macro' href='macro.defEntitySet.html'
                                   title='rust_odata::defEntitySet'>defEntitySet</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>defEntitySet!(name: ident, entity_type: ident)
+Defines a macro for declaring EntitySets. For instance, 
+<code>defEntitySet!(Dogs, Dog);</code>
+Declares an EntitySet named &quot;Dogs&quot; that consistes of elements
+of Entity Dog. CRUD-Q operations are then exposed via implementation of the
+EntitySet trait for struct. </p>
                            </td>
                        </tr>
                        <tr class=' module-item'>

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["EntityDescr",""]],"trait":[["Entity",""]]});
+initSidebarItems({"struct":[["EntityDescr",""],["Property","Structure for holding property values for an Entity"]],"trait":[["Entity",""],["EntitySet","Trait for declaring CRUD-Q implementation."],["EntitySetDescr","Internal descriptor for an EntitySet for usage by the Model. Provides access to the underlying desciptor for the EntityType."]]});

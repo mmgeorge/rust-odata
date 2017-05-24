@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Service",""],["ServiceBuilder",""]]});
+initSidebarItems({"struct":[["Service","An instance of an oData service that will serve each model it possesses. Construct using a ServiceBuilder. "],["ServiceBuilder",""]]});

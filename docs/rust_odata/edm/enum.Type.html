@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `ServiceBuilder` struct in crate `rust_odata`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, ServiceBuilder">
+    <meta name="description" content="API documentation for the Rust `Type` enum in crate `rust_odata`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Type">
 
-    <title>rust_odata::service::ServiceBuilder - Rust</title>
+    <title>rust_odata::edm::Type - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>rust_odata</a>::<wbr><a href='index.html'>service</a></p><script>window.sidebarCurrent = {name: 'ServiceBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>rust_odata</a>::<wbr><a href='index.html'>edm</a></p><script>window.sidebarCurrent = {name: 'Type', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,17 +43,23 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rust_odata</a>::<wbr><a href='index.html'>service</a>::<wbr><a class='struct' href=''>ServiceBuilder</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>rust_odata</a>::<wbr><a href='index.html'>edm</a>::<wbr><a class='enum' href=''>Type</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rust_odata/service/service.rs.html#33-36' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct ServiceBuilder { /* fields omitted */ }</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../rust_odata/service/struct.ServiceBuilder.html' title='rust_odata::service::ServiceBuilder'>ServiceBuilder</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rust_odata/service/service.rs.html#39-63' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../../rust_odata/service/struct.ServiceBuilder.html' title='rust_odata::service::ServiceBuilder'>ServiceBuilder</a></code></span></h4>
-<h4 id='method.add' class='method'><span id='add.v' class='invisible'><code>fn <a href='#method.add' class='fnname'>add</a>(self, model: <a class='struct' href='../../rust_odata/model/struct.Model.html' title='rust_odata::model::Model'>Model</a>) -&gt; Self</code></span></h4>
-<h4 id='method.build' class='method'><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class='struct' href='../../rust_odata/service/struct.Service.html' title='rust_odata::service::Service'>Service</a></code></span></h4>
-</div></section>
+               </span><a class='srclink' href='../../src/rust_odata/edm.rs.html#20-36' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Type {
+    Boolean,
+    Byte,
+    Decimal,
+    Double,
+    Int16,
+    Int32,
+    Int64,
+    String,
+}</pre><h2 class='variants'>Variants</h2>
+<span id='variant.Boolean' class='variant'><span id='Boolean.v' class='invisible'><code>Boolean</code></span></span><span id='variant.Byte' class='variant'><span id='Byte.v' class='invisible'><code>Byte</code></span></span><span id='variant.Decimal' class='variant'><span id='Decimal.v' class='invisible'><code>Decimal</code></span></span><span id='variant.Double' class='variant'><span id='Double.v' class='invisible'><code>Double</code></span></span><span id='variant.Int16' class='variant'><span id='Int16.v' class='invisible'><code>Int16</code></span></span><span id='variant.Int32' class='variant'><span id='Int32.v' class='invisible'><code>Int32</code></span></span><span id='variant.Int64' class='variant'><span id='Int64.v' class='invisible'><code>Int64</code></span></span><span id='variant.String' class='variant'><span id='String.v' class='invisible'><code>String</code></span></span></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

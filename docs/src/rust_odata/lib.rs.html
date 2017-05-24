@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `lib.rs`.">
+    <meta name="description" content="Source to the Rust file `src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -152,7 +152,6 @@
 <span id="107">107</span>
 <span id="108">108</span>
 <span id="109">109</span>
-<span id="110">110</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! # Rust oData</span>
 <span class='doccomment'>//! Rust oData is library for building [oData][ODATA] REST services in Rust.</span>
@@ -238,6 +237,9 @@
 <span class='doccomment'>//! [ODATA]: http://www.odata.org</span>
 <span class='doccomment'>//! [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx</span>
 
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
+
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_derive</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde</span>;
@@ -252,16 +254,12 @@
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>edm</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>property</span>;
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>entity</span>;
 
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>entity_set</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>model</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>service</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>service_handler</span>;
-
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>test</span>;
 
 </pre>

@@ -10,23 +10,16 @@ use hyper::method::Method;
 use model::Model;
 
 
-pub struct ServiceHandler<'a>  {
-    pub name: &'a str, 
+pub struct ServiceHandler {
     pub models: Arc<HashMap<String, Model>>
         
 }
 
 
-impl<'a> ServiceHandler<'a> {
-    fn validate_root(&self, uri: &str) -> bool
-    {
-        // Ensure that the uri points to service 
-        self.name == uri
-    }
-}
+impl ServiceHandler {}
 
 
-impl<'a> Handler for ServiceHandler<'a> {
+impl Handler for ServiceHandler {
     fn handle(&self, mut req: Request, mut res: Response)
     {
         // See if path points to a valid oData server
