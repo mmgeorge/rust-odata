@@ -101,15 +101,10 @@ impl ModelBuilder {
     }
     
 
-    pub fn build(&mut self) -> Model {
-        let mut name = String::new();
-        let mut reg = Vec::new();
-        mem::swap(&mut self.registry, &mut reg);
-        mem::swap(&mut self.name, &mut name);
-        
+    pub fn build(self) -> Model {
         let mut model = Model {
-            name: name,
-            registry: reg,
+            name: self.name,
+            registry: self.registry,
             metadata: json!({"None": "None"})
         };
         model.render();
