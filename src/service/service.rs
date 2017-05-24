@@ -6,7 +6,8 @@ use std::mem;
 use hyper::server::Server;
 
 use model::Model;
-use service_handler::ServiceHandler;
+use service::handler::ServiceHandler;
+
 
 pub struct Service {
     name : Arc<String>,

@@ -2,7 +2,7 @@
 // use std::collections::HashMap;
 // use edm::edm;
 // use std::clone::Clone;
-use property::Property;
+use entity::Property;
 
 
 pub struct EntityDescr {
@@ -56,7 +56,7 @@ macro_rules! defEntity {
                     keys: vec![$(String::from(stringify!($key_name))),*],
                     properties: vec![$(Property::new(
                         stringify!($key),
-                        Edm::from(stringify!($prop_type)))),*] 
+                        edm::from(stringify!($prop_type)))),*] 
                 }
             }
         }

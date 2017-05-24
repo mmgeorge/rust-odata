@@ -1,5 +1,5 @@
 
-use edm::edm;
+use edm;
 
 /// Structure for holding property values for an Entity
 pub struct Property {

@@ -4,7 +4,7 @@
 use std::marker::Sync;
 
 //use property::Property; 
-use entity_set::{EntitySet, EntitySetDescr};
+use entity::*;
 use serde_json::Value;
 
 

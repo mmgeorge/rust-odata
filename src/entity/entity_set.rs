@@ -1,7 +1,8 @@
 
-use entity::{Entity, EntityDescr};
-use property::Property;
+
+use entity::{Entity, EntityDescr, Property};
 use serde_json::Value;
+
 
 /// defEntitySet!(name: ident, entity_type: ident)
 /// Defines a macro for declaring EntitySets. For instance, 
@@ -14,7 +15,7 @@ use serde_json::Value;
 #[macro_export]
 macro_rules! defEntitySet {
     ($name:ident, $entity:ident) => {
-
+        
         struct $name { }
         
         impl $name {
@@ -43,7 +44,8 @@ macro_rules! defEntitySet {
     }
 } 
 
-
+/// Internal descriptor for an EntitySet for usage by the Model. Provides access
+/// to the underlying desciptor for the EntityType.
 pub trait EntitySetDescr {
     fn name(&self) -> String;
     fn descriptor(&self) -> EntityDescr; 
@@ -55,6 +57,8 @@ pub enum SvcError {
     NoImplementation
 }
 
+
+/// Trait for declaring CRUD-Q implementation. 
 pub trait EntitySet {
 
     fn create<E> (&self, _object: E) -> Result<E, SvcError>

@@ -82,9 +82,11 @@
 //! [ODATA]: http://www.odata.org
 //! [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx
 
+#![allow(dead_code)]
+#![allow(unused_imports)]
 
-
-//extern crate serde_derive;
+#[macro_use]
+extern crate serde_derive;
 extern crate serde;
 
 #[macro_use]
@@ -97,15 +99,11 @@ extern crate hyper;
 #[macro_use]
 pub mod edm;
 
-pub mod property;
 #[macro_use]
 pub mod entity;
 
 #[macro_use]
-pub mod entity_set;
 pub mod model;
 pub mod service;
-pub mod service_handler;
-
 pub mod test;
 

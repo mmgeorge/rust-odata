@@ -3,14 +3,12 @@
 mod test {
     use serde_json;
 
-    use property::Property;
-    use edm::edm;
-    use entity::{Entity, EntityDescr};
-    use entity_set::{EntitySet, EntitySetDescr};
+    use edm;
+    use entity::{Entity, EntitySet, Property, EntityDescr, EntitySetDescr};
     use model::{Model, ModelBuilder};
     use service::{Service, ServiceBuilder};
 
-    
+
     defEntity!(Dog(keys => id, name) {
         id: Int64,
         name: String,
@@ -35,7 +33,7 @@ mod test {
             .add(m)
             .build();
         
-        //s.start();
+        s.start();
         //        println!("{}", serde_json::to_string_pretty(m.get_metadata()).unwrap());
         
         unimplemented!();
