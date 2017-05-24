@@ -34,10 +34,6 @@ impl<'a> Handler for ServiceHandler<'a> {
         let components = uri.split('/');
         let size = components.clone().count();
 
-        if  (size < 2) ||
-            !self.validate_root(components.next().unwrap()) {
-            
-        }
         //get_model(&url) -> Result<model, Err(No resource)>
         
         println!("{}", uri);

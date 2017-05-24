@@ -18,8 +18,9 @@ impl Service {
 
     pub fn start(&self)
     {
-        let test = "helloworld";
+        // let test = "helloworld";
         let handler = ServiceHandler {
+            name : "test",
             models: self.models.clone()
         };
         
