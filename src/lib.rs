@@ -58,15 +58,15 @@
 #![allow(dead_code)]
 #![allow(unused_imports)]
 
-#[macro_use] extern crate lazy_static;
+#[macro_use]  extern crate lazy_static;
 #[macro_use] pub extern crate serde_derive;
 #[macro_use] pub extern crate serde_json;
-pub extern crate serde;
+ pub extern crate serde;
 
 // For exporting associated macros
-#[macro_use] pub use serde_derive;
-#[macro_use] pub use serde_json;
-#[macro_use] pub use serde;
+#[macro_use] pub use serde_derive::*;
+#[macro_use] pub use serde_json::*;
+#[macro_use] pub use serde::*;
 
 extern crate time;
 extern crate hyper;
