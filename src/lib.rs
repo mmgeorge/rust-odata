@@ -59,9 +59,9 @@
 #![allow(unused_imports)]
 
 #[macro_use] extern crate lazy_static;
-#[macro_use] extern crate serde_derive;
-#[macro_use] extern crate serde_json;
-extern crate serde;
+#[macro_use] pub extern crate serde_derive;
+#[macro_use] pub extern crate serde_json;
+pub extern crate serde;
 
 extern crate time;
 extern crate hyper;
