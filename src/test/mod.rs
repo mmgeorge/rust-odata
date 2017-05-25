@@ -15,8 +15,6 @@ mod test {
     use service::{Service, ServiceBuilder, Res, Error};
     
 
-    
-   
     #[test]
     fn monster_test () { 
 
@@ -29,7 +27,6 @@ mod test {
 
         defEntitySet!(Dogs, Dog);
 
-        
         // Test database
         lazy_static! {
             static ref MYDOGS: Mutex<Vec<Dog>> = {
@@ -44,7 +41,6 @@ mod test {
             };
         }
         
-
         // Implement CRUD
         impl EntitySet for Dogs {
 
@@ -61,7 +57,6 @@ mod test {
                 Res::Created(value)
             }
             
-            
             fn read(&self, key: String) -> Res 
             {
                 let id = key.parse::<usize>().expect("Could not parse key!");
@@ -71,13 +66,11 @@ mod test {
                 }
             }
 
-            
             fn read_list(&self) -> Res
             {
                 Res::Succ(Some(json!(*MYDOGS)))
             }
         }
-
 
         // Start the service thread
         thread::spawn(move || {

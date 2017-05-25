@@ -64,8 +64,6 @@
 extern crate serde;
 
 extern crate time;
-extern crate crossbeam;
-extern crate chrono;
 extern crate hyper;
     
 #[macro_use] pub mod edm;
