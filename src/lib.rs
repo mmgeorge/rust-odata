@@ -64,10 +64,9 @@
 pub extern crate serde;
 
 // For exporting associated macros
-#[macro_use] pub use serde_derive::*;
-#[macro_use] pub use serde_json::*;
-#[macro_use] pub use serde::*;
-
+#[macro_use] pub use serde_derive;
+#[macro_use] pub use serde_json;
+#[macro_use] pub use serde;
 
 extern crate time;
 extern crate hyper;
