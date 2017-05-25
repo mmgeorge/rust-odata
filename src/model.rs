@@ -4,13 +4,15 @@ use std::marker::Sync;
 use entity::*;
 use serde_json::Value;
 
+/// Trait object for accessing both an EntitySet's descriptor and CRUD-Q implementation
+pub type EsEntry = (Box<EntitySetDescr>, Box<EntitySet>); 
 
 /// Registry for storing metadata for each included
 /// EntitySet. Keys denote EntitySets, Values each EntitySets'
 /// respective properties.
 pub struct Model {
     name: String,
-    registry: Vec<Box<EntitySetDescr>>,
+    registry: Vec<EsEntry>, 
     metadata: Value
 }
 
@@ -20,10 +22,10 @@ unsafe impl Send for Model {}
 impl Model {
 
     /// Lookup specified descriptor
-    pub fn lookup(&self, name: &str) -> Option<&Box<EntitySetDescr>>
+    pub fn lookup(&self, name: &str) -> Option<&EsEntry>
     {
         for entry in &self.registry {
-            if entry.name() == name {
+            if entry.0.name() == name {
                 return Some(&entry)
             }
         }
@@ -50,10 +52,10 @@ impl Model {
         });
 
         for set in &self.registry  {
-            let descr = set.descriptor(); // Load Entity decscriptor
+            let descr = set.0.descriptor(); // Load Entity decscriptor
 
             // Add EntitySet to metadata
-            self.metadata["entityContainer"]["entitySets"][set.name()] = json!({
+            self.metadata["entityContainer"]["entitySets"][set.0.name()] = json!({
                 "entityType": {
                     "$ref": String::from("#/definitions/") + descr.name()
                 }
@@ -93,7 +95,7 @@ impl Model {
 
 pub struct ModelBuilder {
     name: String,
-    registry: Vec<Box<EntitySetDescr>>
+    registry: Vec<EsEntry>
 }
 
 
@@ -109,9 +111,9 @@ impl ModelBuilder {
     
     /// Add a new EntitySet
     pub fn add<E> (mut self, set: E) -> ModelBuilder
-        where E: EntitySetDescr + EntitySet + 'static
+        where E: EntitySetDescr + EntitySet + 'static + Clone
     {
-        self.registry.push(Box::new(set));
+        self.registry.push((Box::new(set.clone()), Box::new(set)));
         self
     }
     

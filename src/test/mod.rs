@@ -6,7 +6,7 @@ mod test {
     use edm;
     use entity::{Entity, EntitySet, Property, EntityDescr, EntitySetDescr};
     use model::{Model, ModelBuilder};
-    use service::{Service, ServiceBuilder};
+    use service::{Service, ServiceBuilder, Res};
 
 
     defEntity!(Dog(keys => id, name) {
@@ -17,14 +17,34 @@ mod test {
 
     defEntitySet!(Dogs, Dog);
 
-    impl EntitySet for Dogs {
-        
-    }
-
+    
 
     #[test]
     fn runme () {
-        // Create oData model
+
+        // Fake database
+        lazy_static! {
+            static ref MYDOGS: Vec<Dog> = {
+                let mut id = -1;
+                let mut id = || { id +=1; id };
+                
+                let danny_dog = Dog::new(id(), String::from("danny"), 4);
+                let jimmy_dog = Dog::new(id(), String::from("jimbo"), 6);
+                let little_pup = Dog::new(id(), String::from("lil"), 1);
+
+                vec![danny_dog, jimmy_dog, little_pup]
+            };
+        }
+        
+        
+        impl EntitySet for Dogs {
+            fn read_list(&self) -> Res
+            {
+                Res::Succ(Some(json!(*MYDOGS)))
+            }
+        }
+
+        
         let m: Model = ModelBuilder::new("dog_cafe.svc")
             .add(Dogs::declare())
             .build();

@@ -1,8 +1,9 @@
 
+use std::clone::Clone;
 
 use entity::{Entity, EntityDescr, Property};
-use service::Error;
-    
+use service::{Error, Res};
+
 use serde_json::Value;
 
 
@@ -43,6 +44,13 @@ macro_rules! defEntitySet {
                 $entity::describe()
             }
         }
+
+        impl Clone for $name {
+            fn clone (&self) -> $name
+            {
+                $name {}
+            }
+        }
     }
 } 
 
@@ -63,42 +71,66 @@ pub enum SvcError {
 /// Trait for declaring CRUD-Q implementation. 
 pub trait EntitySet {
 
-    fn create<E> (&self, _object: E) -> Result<E, SvcError>
-        where E: Entity
+    // fn create (&self, _object: Box<Entity>) -> Result<Box<Entity>, SvcError>
+    // {
+    //     unimplemented!();
+    // }
+    
+
+    // fn read<E> (&self, _key: Property) -> Result<E, SvcError>
+    //     where E: Entity
+    // {
+    //     unimplemented!();
+    // }
+
+    
+    fn read_list (&self) -> Res
     {
-        unimplemented!();
+        Res::Succ(Some(json!(null)))
     }
     
 
-    fn read<E> (&self, _key: Property) -> Result<E, SvcError>
-        where E: Entity
-    {
-        unimplemented!();
-    }
-
-    
-    fn read_list<E: Entity> (&self) -> Result<Vec<E>, SvcError>
-    {
-        unimplemented!();
-    }
+    // fn update<E> (&self, _json: Value) -> Result<E, SvcError>
+    //     where E: Entity
+    // {
+    //     unimplemented!();
+    // }
     
 
-    fn update<E> (&self, _json: Value) -> Result<E, SvcError>
-        where E: Entity
-    {
-        unimplemented!();
-    }
-    
-
-    fn delete<E> (&self, _key: Property) -> Result<E, SvcError>
-        where E: Entity
-    {
-        unimplemented!();
-    }
+    // fn delete<E> (&self, _key: Property) -> Result<E, SvcError>
+    //     where E: Entity
+    // {
+    //     unimplemented!();
+    // }
 
     
     // fn query (&self, params: Vec<QueryOpt>) -> Result<Vec<E>, SvcError>
+    // where Self: Sized
     // {
     //     unimplemented!();
     // }
 }
+
+// impl Clone for Box<EntitySet> {
+//     fn clone(&self) -> Box<EntitySet> {
+//         self.clone()
+//     }
+// }
+
+// impl Clone for Box<EntitySetDescr> {
+//     fn clone(&self) -> Box<EntitySetDescr> {
+//         self.clone()
+//     }
+// }
+
+
+
+// impl<T: ?Sized> EntitySet for Box<T>
+//     where T: EntitySet
+// {
+//     fn read_list<E: Entity + ?Sized> (&self) -> Res
+//         where Self: Sized
+//     {
+//         (**self).read_list::<E>()
+//     }
+// }
