@@ -6,6 +6,7 @@
 
 #[macro_export]
 macro_rules! rust_type {
+    (Binary) => { Vec<bool> };
     (Boolean) => { bool };
     (Byte) => { u8 };
     (Decimal) => { f32 };
@@ -18,6 +19,7 @@ macro_rules! rust_type {
 
 
 pub enum Type {
+    Binary, 
     Boolean,
     Byte,
     Decimal,
@@ -38,6 +40,7 @@ pub enum Type {
 pub fn from(s : &str) -> Type
 {
     match s {
+        "Binary" => Type::Binary,
         "Boolean" => Type::Boolean,
         "Byte" => Type::Byte,
         "Decimal" => Type::Decimal,
@@ -52,7 +55,8 @@ pub fn from(s : &str) -> Type
 
 
 pub fn ty (ty : &Type) -> Vec<&str> {
-    match ty { 
+    match ty {
+        &Type::Binary => vec!["string"],
         &Type::Boolean => vec!["boolean"],
         &Type::Byte => vec!["integer"],
         &Type::Decimal => vec!["number", "string"],
@@ -67,6 +71,7 @@ pub fn ty (ty : &Type) -> Vec<&str> {
 
 pub fn format (ty : &Type) -> &str {
     match ty {
+        &Type::Binary => "base64url",
         &Type::Boolean => "",
         &Type::Byte => "uint8",
         &Type::Decimal => "decimal",

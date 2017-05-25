@@ -63,13 +63,6 @@
 #[macro_use] pub extern crate serde_json;
  pub extern crate serde;
 
-// For exporting associated macrosE0463
-#[macro_use] pub mod rexport {
-    #[macro_use] pub use serde_derive;
-    #[macro_use] pub use serde_json;
-    #[macro_use] pub use serde;
-}
-
 extern crate time;
 extern crate hyper;
     
