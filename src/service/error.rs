@@ -4,5 +4,6 @@
 pub enum Error {
     NoImpl,
     InvalidRoot,
-    InvalidModel, 
+    InvalidModel,
+    NotFound(String)
 }

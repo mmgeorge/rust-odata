@@ -1,5 +1,5 @@
 
-use std::io::Write;
+use std::io::{Read, Write};
 use std::sync::Arc;
 use std::collections::HashMap;
 use std::clone::Clone;
@@ -9,7 +9,7 @@ use hyper::server::{Handler, Request, Response};
 use hyper::status::StatusCode;
 use hyper::method::Method;
 use hyper::uri::RequestUri;
-use serde_json::{Value, to_vec, to_string};
+use serde_json::{Value, to_vec, to_string, from_slice, from_str};
 
 use model::{Model, EsEntry};
 use service::Error;
@@ -20,6 +20,7 @@ type SetDescr = Box<EntitySetDescr>;
 
 pub enum Res {
     Succ(Option<Value>),
+    Created(Value),
     Err(Error)
 }
 
@@ -28,6 +29,7 @@ pub enum Res {
 #[derive(Clone)] // derive Clone is temporary only (see workaround)
 enum Param {
     Metadata,
+    Key(String),
     None
 }
 
@@ -78,8 +80,18 @@ impl ServiceHandler {
         // Parse remaing portion of uri. 
         if let Some(part) = parts.next()  {
 
-            // First check if request points to an EntitySet
-            entity_set = model.unwrap().lookup(part);
+            let mut set = part; 
+            
+            // First check if part contains a key lookup, i.e. /customer.svc/Customers(1234)
+            let sub_parts: Vec<&str> = part.split("(").collect();
+            if sub_parts.len() == 2 { // e.g. Customers, 1234
+                set = sub_parts[0];
+                let key: String = sub_parts[1].chars().filter(|x| x.is_numeric()).collect();
+                params.push(Param::Key(key));
+            }
+            
+            // Next see if request points to an EntitySet
+            entity_set = model.unwrap().lookup(set);
 
             // Otherwise check that the part points to $metadata
             if entity_set.is_none() {
@@ -88,25 +100,21 @@ impl ServiceHandler {
                 }
             }
         }
-
-        
-        
-        
-        // unimplemented - do params parsing
         Ok((model.unwrap(), entity_set, params))
     }
 
 
     /// Routes request to designated set's CRUD-Q implementations
-    fn satisfy(&self, body: (Method, &Model, Option<&EsEntry>, &[Param])) -> Res
+    fn satisfy(&self, req_body: &[u8],
+               body: (Method, &Model, Option<&EsEntry>, &[Param])) -> Res
     {
         // Wanted to use slice matches for this, but it looks like they are an
         // experimental only feature. This is a workaround (only because we have
         // a limited number of allowable params currently) that extracts the slice
         // as a tuple :
 
-        let model = body.1; 
-        let body = match body.3.len() {
+        let model = body.1;
+        let body_comps = match body.3.len() {
             0 => (body.0, body.2, Param::None),
             1 => (body.0, body.2, body.3[0].clone()), // cloning is ugly but temporary
             _ => unimplemented!()
@@ -114,17 +122,23 @@ impl ServiceHandler {
         
         // end workaround
         
-        match body {
+        match body_comps {
             // Metadata document request
             (Method::Get, None, Param::Metadata) => Res::Succ(Some(model.get_metadata().clone())),
-            
+
             // Model document request
             (Method::Get, None, Param::None) => panic!("requires entity document!"),
 
-            // ReadList
-            (Method::Get, Some(set), _) => set.1.read_list(), 
+            // Read List
+            (Method::Get, Some(set), Param::None) => set.1.read_list(), 
 
-            // Get
+            // Read Entity
+            (Method::Get, Some(set), Param::Key(key)) => set.1.read(key),
+
+            // Create Entity
+            (Method::Post, Some(set), Param::None) =>
+                set.1.create(from_slice(req_body).expect("Unable to parse request body!")),
+
             // (Method::Get, None, _) => ResType::Succ(None),
             // (Method::Post, Some(_), _) => ResType::Succ(None),
             _ => panic!(),
@@ -156,6 +170,35 @@ impl ServiceHandler {
                 
                 res.start().unwrap().write_all(content).unwrap();
             },
+            Res::Created(value) => {
+                mem::swap(res.status_mut(), &mut StatusCode::Created); // ugly...
+                
+                let body = to_vec(&value).unwrap();
+                let content = body.as_slice();
+                res.headers_mut().set(ContentLength(content.len() as u64));
+                
+                res.start().unwrap().write_all(content).unwrap();
+            },
+            Res::Err(Error::NotFound(resource)) => {
+                mem::swap(res.status_mut(), &mut StatusCode::NotFound); // ugly...
+
+                let value = json!({
+                    "odata.error": {
+                        "code": "",
+                        "message": {
+                            "lang": "en-US",
+                            "value": String::from("Resource not found for the segment '")
+                                + &resource + "'."
+                        }
+                    }
+                });
+                
+                let body = to_vec(&value).unwrap();
+                let content = body.as_slice();
+                res.headers_mut().set(ContentLength(content.len() as u64));
+                
+                res.start().unwrap().write_all(content).unwrap();
+            },
             Res::Err(Error::InvalidModel) => println!("invalidModel"),
             Res::Err(Error::InvalidRoot) => println!("invalid root!"),
             _ => println!("unimplemented!"),
@@ -165,10 +208,17 @@ impl ServiceHandler {
 
 
 impl Handler for ServiceHandler {
-    fn handle(&self, req: Request, res: Response)
+    fn handle(&self, mut req: Request, res: Response)
     {
+        use std;
+        // Read contents of message
+        let mut buf = Vec::new();
+        req.read_to_end(&mut buf).unwrap();
+        
         let action = match self.validate(req.uri) {     
-            Ok((model, set, params)) => self.satisfy((req.method, model, set, params.as_slice())),
+            Ok((model, set, params)) =>
+                self.satisfy(buf.as_slice(), (req.method, model, set, params.as_slice())),
+            
             Err(e) => Res::Err(e),
         };
 

@@ -71,17 +71,16 @@ pub enum SvcError {
 /// Trait for declaring CRUD-Q implementation. 
 pub trait EntitySet {
 
-    // fn create (&self, _object: Box<Entity>) -> Result<Box<Entity>, SvcError>
-    // {
-    //     unimplemented!();
-    // }
+    fn create (&self, _value: Value) -> Res
+    {
+        unimplemented!();
+    }
     
 
-    // fn read<E> (&self, _key: Property) -> Result<E, SvcError>
-    //     where E: Entity
-    // {
-    //     unimplemented!();
-    // }
+    fn read (&self, _key: String) -> Res
+    {
+        unimplemented!();
+    }
 
     
     fn read_list (&self) -> Res

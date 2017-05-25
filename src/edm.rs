@@ -37,7 +37,6 @@ pub enum Type {
 
 pub fn from(s : &str) -> Type
 {
-    println!("FROM = {}", s);
     match s {
         "Boolean" => Type::Boolean,
         "Byte" => Type::Byte,
