@@ -38,7 +38,7 @@ macro_rules! defEntity {
         
         #[derive(Serialize, Deserialize, Debug)]
         struct $name {
-            $( $key : rust_type!($prop_type) ),* // add OR clause here? 
+            $( pub $key : rust_type!($prop_type) ),* // add OR clause here? 
         }
         
         impl $name {

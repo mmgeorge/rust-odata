@@ -6,6 +6,7 @@ mod test {
     use std::time::Duration;
 
     use serde_json;
+    use serde_json::{Value, from_reader};
     use hyper::Client;
     use hyper::status::StatusCode;
 
@@ -19,11 +20,13 @@ mod test {
     fn monster_test () { 
 
         // Entity/EntitySet declarations
-        defEntity!(Dog(keys => id, name) {
-            id: Int64,
-            name: String,
-            age: Int16
-        });
+        defEntity!(
+            Dog(keys => id, name) {
+                id: Int64,
+                name: String,
+                age: Int16
+            }
+        );
 
         defEntitySet!(Dogs, Dog);
 
@@ -60,6 +63,7 @@ mod test {
             fn read(&self, key: String) -> Res 
             {
                 let id = key.parse::<usize>().expect("Could not parse key!");
+
                 match (*MYDOGS).lock().unwrap().get(id) {
                     Some(dog) => Res::Succ(Some(json!(dog))),
                     None      => Res::Err(Error::NotFound(String::from("Dogs")))
@@ -76,6 +80,20 @@ mod test {
         thread::spawn(move || {
             let m: Model = ModelBuilder::new("dog_cafe.svc")
                 .add(Dogs::declare())
+                .action("rename", vec![edm::Type::String],
+                        |v: serde_json::Value| -> Res {
+                            println!("Renaming Dog!");
+                            
+                            let id = v["id"].as_u64().expect("Could not parse id");
+                            
+                            match (*MYDOGS).lock().unwrap().get_mut(id as usize) {
+                                Some(dog) => {
+                                    dog.name = String::from(v["name"].as_str().unwrap());
+                                    Res::Succ(None)
+                                },
+                                None => Res::Err(Error::NotFound(String::from("Dogs")))
+                            }
+                        })
                 .build();
 
             let s: Service = ServiceBuilder::new("apis")
@@ -136,6 +154,21 @@ mod test {
             url = "http://localhost:8080/apis/dog_cafe.svc/Dogs(3)";
             res = client.get(url).send().unwrap();
             assert_eq!(res.status, StatusCode::Ok);
+        }
+
+        { // Test Action
+            println!("Checking Action");
+            let client = Client::new();
+            let url = "http://localhost:8080/apis/dog_cafe.svc/rename";
+            let value = json!({ "id": 1, "name": "sally" });
+            client.post(url).body(&value.to_string()).send().unwrap();
+
+            let url = "http://localhost:8080/apis/dog_cafe.svc/Dogs(1)";
+            let res = client.get(url).send().unwrap();
+            let value: Value = from_reader(res).expect("Unable to parse response!");
+            assert_eq!(value["name"].as_str().unwrap(), "sally");
+            
+            //assert_eq!(res.status, StatusCode::Created);
         }
     }
 }

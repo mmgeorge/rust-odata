@@ -58,7 +58,10 @@ impl ServiceHandler {
     /// Validates the selected uri, returning a tuple (model, set, parameters)
     /// for representing the request  or corresponding error.
     fn validate(&self, uri: RequestUri)
-                -> Result<(&Model, Option<&EsEntry>, Vec<Param>), Error>
+                -> Result<(&Model,
+                           Option<&EsEntry>,
+                           Option<&Box<Fn(Value) -> Res>>, // Action
+                           Vec<Param>), Error>
     {
         let uri = uri.to_string();
         let mut parts = uri.split('/');
@@ -69,13 +72,15 @@ impl ServiceHandler {
             return Err(Error::InvalidRoot);
         }
 
-        let model = self.lookup(parts.next().unwrap());
+        let model;
+        match self.lookup(parts.next().unwrap()) {
+            Some(m) => model = m,
+            _       => return Err(Error::InvalidModel)
+        }
+        
         let mut entity_set = None;  
         let mut params = Vec::new(); // - unimplmented
-        
-        if model.is_none() {
-            return Err(Error::InvalidModel);
-        }
+        let mut action = None;
 
         // Parse remaing portion of uri. 
         if let Some(part) = parts.next()  {
@@ -84,29 +89,40 @@ impl ServiceHandler {
             
             // First check if part contains a key lookup, i.e. /customer.svc/Customers(1234)
             let sub_parts: Vec<&str> = part.split("(").collect();
-            if sub_parts.len() == 2 { // e.g. Customers, 1234
+            if sub_parts.len() == 2 { // e.g. Customers, 1234)
                 set = sub_parts[0];
                 let key: String = sub_parts[1].chars().filter(|x| x.is_numeric()).collect();
                 params.push(Param::Key(key));
             }
             
             // Next see if request points to an EntitySet
-            entity_set = model.unwrap().lookup(set);
+            entity_set = model.lookup(set);
 
-            // Otherwise check that the part points to $metadata
             if entity_set.is_none() {
+
+                // Otherwise check that the part points to $metadata
                 if part == "$metadata"  {
                     params.push(Param::Metadata);
                 }
+
             }
+            // Otherwise check that part points to an unbounded action
+            action = model.lookup_action(part);
+
         }
-        Ok((model.unwrap(), entity_set, params))
+
+
+        Ok((model, entity_set, action, params))
     }
 
 
     /// Routes request to designated set's CRUD-Q implementations
     fn satisfy(&self, req_body: &[u8],
-               body: (Method, &Model, Option<&EsEntry>, &[Param])) -> Res
+               body: (Method,
+                      &Model, Option<&EsEntry>,
+                      Option<&Box<Fn(Value) -> Res>>, // Action
+                      &[Param]))
+               -> Res
     {
         // Wanted to use slice matches for this, but it looks like they are an
         // experimental only feature. This is a workaround (only because we have
@@ -114,9 +130,9 @@ impl ServiceHandler {
         // as a tuple :
 
         let model = body.1;
-        let body_comps = match body.3.len() {
-            0 => (body.0, body.2, Param::None),
-            1 => (body.0, body.2, body.3[0].clone()), // cloning is ugly but temporary
+        let body_comps = match body.4.len() {
+            0 => (body.0, body.2, body.3, Param::None),
+            1 => (body.0, body.2, body.3, body.4[0].clone()), // cloning is ugly but temporary
             _ => unimplemented!()
         };
         
@@ -124,21 +140,26 @@ impl ServiceHandler {
         
         match body_comps {
             // Metadata document request
-            (Method::Get, None, Param::Metadata) => Res::Succ(Some(model.get_metadata().clone())),
+            (Method::Get, None, None, Param::Metadata)
+                => Res::Succ(Some(model.get_metadata().clone())),
 
             // Model document request
-            (Method::Get, None, Param::None) => panic!("requires entity document!"),
+            (Method::Get, None, None, Param::None) => panic!("requires entity document!"),
 
             // Read List
-            (Method::Get, Some(set), Param::None) => set.1.read_list(), 
+            (Method::Get, Some(set), None, Param::None) => set.1.read_list(), 
 
             // Read Entity
-            (Method::Get, Some(set), Param::Key(key)) => set.1.read(key),
+            (Method::Get, Some(set), None, Param::Key(key)) => set.1.read(key),
 
             // Create Entity
-            (Method::Post, Some(set), Param::None) =>
-                set.1.create(from_slice(req_body).expect("Unable to parse request body!")),
+            (Method::Post, Some(set), None, Param::None)
+                => set.1.create(from_slice(req_body).expect("Unable to parse request body!")),
 
+            // Action
+            (Method::Post, None, Some(action), Param::None)
+                => action(from_slice(req_body).expect("Unable to parse request body!")),
+            
             // (Method::Get, None, _) => ResType::Succ(None),
             // (Method::Post, Some(_), _) => ResType::Succ(None),
             _ => panic!(),
@@ -216,8 +237,8 @@ impl Handler for ServiceHandler {
         req.read_to_end(&mut buf).unwrap();
         
         let action = match self.validate(req.uri) {     
-            Ok((model, set, params)) =>
-                self.satisfy(buf.as_slice(), (req.method, model, set, params.as_slice())),
+            Ok((model, set, action, params)) =>
+                self.satisfy(buf.as_slice(), (req.method, model, set, action, params.as_slice())),
             
             Err(e) => Res::Err(e),
         };

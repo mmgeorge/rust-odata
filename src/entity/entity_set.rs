@@ -62,24 +62,18 @@ pub trait EntitySetDescr {
 }
 
 
-#[derive(Debug)]
-pub enum SvcError {
-    NoImplementation
-}
-
-
 /// Trait for declaring CRUD-Q implementation. 
 pub trait EntitySet {
 
     fn create (&self, _value: Value) -> Res
     {
-        unimplemented!();
+        Res::Err(Error::NoImpl)
     }
     
 
     fn read (&self, _key: String) -> Res
     {
-        unimplemented!();
+        Res::Err(Error::NoImpl)
     }
 
     
@@ -89,26 +83,34 @@ pub trait EntitySet {
     }
     
 
-    // fn update<E> (&self, _json: Value) -> Result<E, SvcError>
-    //     where E: Entity
-    // {
-    //     unimplemented!();
-    // }
+    fn update (&self, _json: Value) -> Res
+    {
+        Res::Err(Error::NoImpl)
+    }
     
 
-    // fn delete<E> (&self, _key: Property) -> Result<E, SvcError>
-    //     where E: Entity
-    // {
-    //     unimplemented!();
-    // }
+    fn delete (&self, _key: Property) -> Res
+    {
+        Res::Err(Error::NoImpl)
+    }
 
     
-    // fn query (&self, params: Vec<QueryOpt>) -> Result<Vec<E>, SvcError>
-    // where Self: Sized
-    // {
-    //     unimplemented!();
-    // }
+    fn query (&self, _params: Vec<String>) -> Res
+    {
+        Res::Err(Error::NoImpl)
+    }
 }
+
+
+// Experimental
+//   is there a work around to do something like this?
+
+// fn delete<E> (&self, _key: Property) -> Res
+//         where E: Entity
+//     {
+//         unimplemented!();
+//     }
+
 
 // impl Clone for Box<EntitySet> {
 //     fn clone(&self) -> Box<EntitySet> {
@@ -121,8 +123,6 @@ pub trait EntitySet {
 //         self.clone()
 //     }
 // }
-
-
 
 // impl<T: ?Sized> EntitySet for Box<T>
 //     where T: EntitySet

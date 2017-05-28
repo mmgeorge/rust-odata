@@ -1,8 +1,11 @@
 
 use std::marker::Sync;
+use std::collections::HashMap;
 
+use edm;
 use entity::*;
 use serde_json::Value;
+use service::Res;
 
 /// Trait object for accessing both an EntitySet's descriptor and CRUD-Q implementation
 pub type EsEntry = (Box<EntitySetDescr>, Box<EntitySet>); 
@@ -13,7 +16,9 @@ pub type EsEntry = (Box<EntitySetDescr>, Box<EntitySet>);
 pub struct Model {
     name: String,
     registry: Vec<EsEntry>, 
-    metadata: Value
+    metadata: Value,
+    pub actions: HashMap<String, Box<Fn(Value) -> Res>>,
+    ractions: HashMap<String, Vec<edm::Type>>
 }
 
 unsafe impl Sync for Model {}
@@ -30,6 +35,13 @@ impl Model {
             }
         }
         None
+    }
+
+
+    pub fn lookup_action(&self, name: &str)
+                         -> Option<&Box<Fn(Value) -> Res>>
+    {
+        self.actions.get(name)
     }
 
     
@@ -95,7 +107,9 @@ impl Model {
 
 pub struct ModelBuilder {
     name: String,
-    registry: Vec<EsEntry>
+    registry: Vec<EsEntry>,
+    actions: HashMap<String, Box<Fn(Value) -> Res>>,
+    ractions: HashMap<String, Vec<edm::Type>>
 }
 
 
@@ -104,7 +118,9 @@ impl ModelBuilder {
     {
         ModelBuilder {
             name: String::from(name),
-            registry: Vec::new()
+            registry: Vec::new(),
+            actions: HashMap::new(),
+            ractions: HashMap::new()
         }
     }
 
@@ -116,13 +132,25 @@ impl ModelBuilder {
         self.registry.push((Box::new(set.clone()), Box::new(set)));
         self
     }
-    
 
+
+    /// Add a new unbounded action
+    pub fn action<F> (mut self, name: &str, params: Vec<edm::Type>, func: F) -> ModelBuilder
+        where F: Fn(Value) -> Res + 'static
+    {
+        self.actions.insert(String::from(name), Box::new(func));
+        self.ractions.insert(String::from(name), params);
+        self
+    }
+
+    
     pub fn build(self) -> Model {
         let mut model = Model {
             name: self.name,
             registry: self.registry,
-            metadata: json!({"None": "None"})
+            metadata: json!({"None": "None"}),
+            actions: self.actions,
+            ractions: self.ractions,
         };
         model.render();
         model
