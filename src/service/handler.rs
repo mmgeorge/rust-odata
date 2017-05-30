@@ -222,7 +222,25 @@ impl ServiceHandler {
             },
             Res::Err(Error::InvalidModel) => println!("invalidModel"),
             Res::Err(Error::InvalidRoot) => println!("invalid root!"),
-            _ => println!("unimplemented!"),
+            _ => {
+                mem::swap(res.status_mut(), &mut StatusCode::BadRequest); // ugly...
+
+                let value = json!({
+                    "odata.error": {
+                        "code": "400",
+                        "message": {
+                            "lang": "en-US",
+                            "value": String::from("Bad request")
+                        }
+                    }
+                });
+                
+                let body = to_vec(&value).unwrap();
+                let content = body.as_slice();
+                res.headers_mut().set(ContentLength(content.len() as u64));
+                
+                res.start().unwrap().write_all(content).unwrap();
+            }
         }
     }
 }
