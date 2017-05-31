@@ -54,5 +54,5 @@ Now our clients can access our API using `<hostname:port>/api/connect_four.svc` 
 [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx
 [GSERVE]: https://github.com/mmgeorge/game_server
 [ODATA]: http://www.odata.org
-[DOC]: https://mmgeorge.github.io/rust-odata/rust_odata/
+[DOC]: https://mmgeorge.github.io/rust-odata/odata/
 [CONNECTFOUR]: https://github.com/eecs395rust/ConnectFour

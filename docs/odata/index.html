@@ -48,34 +48,15 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/odata/lib.rs.html#1-74' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/odata/lib.rs.html#1-33' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Rust oData is library for building <a href="http://www.odata.org">OData</a> REST services in Rust.
 This library is referenced and utilized by the <a href="https://github.com/eecs395rust/ConnectFour">ConnectFour</a> project in the <a href="https://github.com/mmgeorge/game_server">game_server</a> repository for service generation.</p>
-
-<p>The online documentation for rust-odata can be found <a href="https://mmgeorge.github.io/rust-odata/rust_odata/">here</a>. </p>
 
 <h2 id='what-is-odata' class='section-header'><a href='#what-is-odata'>What is oData?</a></h2>
 <p>OData (Open Data Protocol) is an ISO/IEC approved, OASIS standard that defines a set of best practices for building and consuming RESTful APIs. OData helps you focus on your business logic while building RESTful APIs without having to worry about the various approaches to define request and response headers, status codes, HTTP methods, URL conventions, media types, payload formats, query options, etc. OData also provides guidance for tracking changes, defining functions/actions for reusable procedures, and sending asynchronous/batch requests. <a href="http://www.odata.org">[1]</a></p>
 
 <h2 id='usage-overview' class='section-header'><a href='#usage-overview'>Usage Overview</a></h2>
-<p>The library can be used to build REST API based using the <a href="https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx">Entity Data Model</a>. EntityTypes and EntitySets are declared using macros which provide additional information used to generate metadata and create resource paths. For instance, we can declare a Game EntityType
-<code>rust // Creates a new Game struct and generates serveral methods used internally defEntity!(Game(keys =&gt; id) { id: Int64, width: Int64, height: Int64, k: Int16, curr_player: Int16, status: String, board: String });</code>
-and and EntitySet Games which consists of these types. 
-<code>rust /// Declares Games as an EntitySet containing entities of type Game. Once added to /// the model, it will be reachable via &lt;...&gt;/Games(I) defEntitySet!(Games, Game);</code>
-Now we can implemented CRUD operations for our sevice via the <code>EntitySet</code> trait:
-<code>rust fn create(&amp;self, value: serde_json::Value) -&gt; Res { ... } fn read(&amp;self, key: String) -&gt; Res { ... } fn read_list(&amp;self) -&gt; Res { ... } fn update ... fn delete ...</code>
-The EntitySet trait provides a default implementation for these methods, meaning that we only need to directly implement those that we plan on using. Lastly we need to instantiate the <code>model</code> using our <code>EntitySet</code> (here we only have one), as well as declare the name of our service and start listening for requests. 
-```rust
-let model = ModelBuilder::new(&quot;connect_four.svc&quot;)
-    .add(Games::declare())
-    .build()</p>
-
-<p>let svc = ServiceBuilder::new(&quot;api&quot;)
-    .add(model)
-    .build();</p>
-
-<p>svc.start();
-``<code>Now our clients can access our API using</code><a href="hostname:port">hostname:port</a>/api/connect_four.svc<code>to, for example, get a list of games by going to</code><a href="hostname:port">hostname:port</a>/api/connect_four.svc/Games`</p>
+<p>The library can be used to build REST API based using the <a href="https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx">Entity Data Model</a>. EntityTypes and EntitySets are declared using macros which provide additional information used to generate metadata and create resource paths. See README for sample usage.</p>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
 <table><tr><td><code>pub extern crate <a class='mod' href='https://docs.rs/serde_derive/1.0.8/serde_derive/index.html' title='serde_derive'>serde_derive</a>;</code></td></tr><tr><td><code>pub extern crate <a class='mod' href='https://docs.rs/serde_json/1.0.2/serde_json/index.html' title='serde_json'>serde_json</a>;</code></td></tr><tr><td><code>pub extern crate <a class='mod' href='https://docs.rs/serde/1.0.8/serde/index.html' title='serde'>serde</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
