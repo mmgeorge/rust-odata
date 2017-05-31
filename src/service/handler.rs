@@ -17,7 +17,8 @@ use entity::{EntityDescr, EntitySetDescr};
 
 type SetDescr = Box<EntitySetDescr>;
 
-
+/// Used for routing requests and for simplifying CRUD-Q implementation. Providing the
+/// correct HTTP StatusCode is handled by the server.
 pub enum Res {
     Succ(Option<Value>),
     Created(Value),
@@ -33,7 +34,7 @@ enum Param {
     None
 }
 
-
+/// An internal type used by the Service class for handling requests.
 pub struct ServiceHandler {
     pub root: Arc<String>,
     pub models: Arc<HashMap<String, Model>>
@@ -49,10 +50,7 @@ impl ServiceHandler {
 
 
     /// Parses query parameters ($)
-    fn parse_params()
-    {
-        
-    }
+    fn parse_params() {} // unimplemented
 
     
     /// Validates the selected uri, returning a tuple (model, set, parameters)
@@ -79,12 +77,11 @@ impl ServiceHandler {
         }
         
         let mut entity_set = None;  
-        let mut params = Vec::new(); // - unimplmented
+        let mut params = Vec::new();
         let mut action = None;
 
         // Parse remaing portion of uri. 
         if let Some(part) = parts.next()  {
-
             let mut set = part; 
             
             // First check if part contains a key lookup, i.e. /customer.svc/Customers(1234)
@@ -97,21 +94,16 @@ impl ServiceHandler {
             
             // Next see if request points to an EntitySet
             entity_set = model.lookup(set);
-
+            
             if entity_set.is_none() {
-
                 // Otherwise check that the part points to $metadata
                 if part == "$metadata"  {
                     params.push(Param::Metadata);
                 }
-
             }
             // Otherwise check that part points to an unbounded action
             action = model.lookup_action(part);
-
         }
-
-
         Ok((model, entity_set, action, params))
     }
 
@@ -160,13 +152,11 @@ impl ServiceHandler {
             (Method::Post, None, Some(action), Param::None)
                 => action(from_slice(req_body).expect("Unable to parse request body!")),
             
-            // (Method::Get, None, _) => ResType::Succ(None),
-            // (Method::Post, Some(_), _) => ResType::Succ(None),
-            _ => panic!(),
+            _ => panic!(), // Triggers a 500
         }
     }
 
-    /// Responds to request based on ResType
+    /// Responds to a request based on ResType
     fn respond(&self, rt: Res, mut res: Response)
     {
         use hyper::header::*;
@@ -250,6 +240,7 @@ impl Handler for ServiceHandler {
     fn handle(&self, mut req: Request, res: Response)
     {
         use std;
+        
         // Read contents of message
         let mut buf = Vec::new();
         req.read_to_end(&mut buf).unwrap();
@@ -262,9 +253,6 @@ impl Handler for ServiceHandler {
         };
 
         self.respond(action, res);
-
-        //         io::copy(&mut req, &mut res.start().unwrap()).unwrap(); 
-        //     _ => *res.status_mut() = StatusCode::MethodNotAllowed
     }
 }
 

@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Model","Registry for storing metadata for each included EntitySet. Keys denote EntitySets, Values each EntitySets' respective properties."],["ModelBuilder",""]]});

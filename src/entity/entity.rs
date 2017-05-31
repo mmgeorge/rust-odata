@@ -1,10 +1,7 @@
 
-// use std::collections::HashMap;
-// use edm::edm;
-// use std::clone::Clone;
 use entity::Property;
 
-
+/// Internal type holding metadata for EntityTypes
 pub struct EntityDescr {
     pub name: String,
     pub keys: Vec<String>, 
@@ -29,7 +26,7 @@ impl EntityDescr {
 }
 
 
-/// Declare a new Entity
+/// Declare a new EntityType, generating the metadata for use by the Model and Service class.
 #[macro_export]
 macro_rules! defEntity {
     ($name:ident( keys => $($key_name:ident),* ) {

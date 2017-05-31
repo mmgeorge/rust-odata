@@ -7,7 +7,7 @@ use model::Model;
 use service::handler::ServiceHandler;
 
 
-/// An instance of an oData service that will serve each model it possesses. Construct
+/// An instance of an oData service that will serve each model it contains. Constructed
 /// using a ServiceBuilder. 
 pub struct Service {
     root : Arc<String>,

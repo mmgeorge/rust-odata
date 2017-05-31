@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `odata` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, odata">
+
+    <title>odata - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'odata', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>odata</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/odata/lib.rs.html#1-74' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Rust oData is library for building <a href="http://www.odata.org">OData</a> REST services in Rust.
+This library is referenced and utilized by the <a href="https://github.com/eecs395rust/ConnectFour">ConnectFour</a> project in the <a href="https://github.com/mmgeorge/game_server">game_server</a> repository for service generation.</p>
+
+<p>The online documentation for rust-odata can be found <a href="https://mmgeorge.github.io/rust-odata/rust_odata/">here</a>. </p>
+
+<h2 id='what-is-odata' class='section-header'><a href='#what-is-odata'>What is oData?</a></h2>
+<p>OData (Open Data Protocol) is an ISO/IEC approved, OASIS standard that defines a set of best practices for building and consuming RESTful APIs. OData helps you focus on your business logic while building RESTful APIs without having to worry about the various approaches to define request and response headers, status codes, HTTP methods, URL conventions, media types, payload formats, query options, etc. OData also provides guidance for tracking changes, defining functions/actions for reusable procedures, and sending asynchronous/batch requests. <a href="http://www.odata.org">[1]</a></p>
+
+<h2 id='usage-overview' class='section-header'><a href='#usage-overview'>Usage Overview</a></h2>
+<p>The library can be used to build REST API based using the <a href="https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx">Entity Data Model</a>. EntityTypes and EntitySets are declared using macros which provide additional information used to generate metadata and create resource paths. For instance, we can declare a Game EntityType
+<code>// Creates a new Game struct and generates serveral methods used internally defEntity!(Game(keys =&gt; id) { id: Int64, width: Int64, height: Int64, k: Int16, curr_player: Int16, status: String, board: String });</code>
+and and EntitySet Games which consists of these types. 
+<code>/// Declares Games as an EntitySet containing entities of type Game. Once added to /// the model, it will be reachable via &lt;...&gt;/Games(I) defEntitySet!(Games, Game);</code>
+Now we can implemented CRUD operations for our sevice via the <code>EntitySet</code> trait:
+<code>fn create(&amp;self, value: serde_json::Value) -&gt; Res { ... } fn read(&amp;self, key: String) -&gt; Res { ... } fn read_list(&amp;self) -&gt; Res { ... } fn update ... fn delete ...</code>
+The EntitySet trait provides a default implementation for these methods, meaning that we only need to directly implement those that we plan on using. Lastly we need to instantiate the <code>model</code> using our <code>EntitySet</code> (here we only have one), as well as declare the name of our service and start listening for requests. 
+```
+let model = ModelBuilder::new(&quot;connect_four.svc&quot;)
+    .add(Games::declare())
+    .build()</p>
+
+<p>let svc = ServiceBuilder::new(&quot;api&quot;)
+    .add(model)
+    .build();</p>
+
+<p>svc.start();
+``<code>Now our clients can access our API using</code><a href="hostname:port">hostname:port</a>/api/connect_four.svc<code>to, for example, get a list of games by going to</code><a href="hostname:port">hostname:port</a>/api/connect_four.svc/Games`</p>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub extern crate <a class='mod' href='https://docs.rs/serde_derive/1.0.8/serde_derive/index.html' title='serde_derive'>serde_derive</a>;</code></td></tr><tr><td><code>pub extern crate <a class='mod' href='https://docs.rs/serde_json/1.0.2/serde_json/index.html' title='serde_json'>serde_json</a>;</code></td></tr><tr><td><code>pub extern crate <a class='mod' href='https://docs.rs/serde/1.0.8/serde/index.html' title='serde'>serde</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='edm/index.html'
+                                  title='odata::edm'>edm</a></td>
+                           <td class='docblock-short'>
+                                <p>This module includes type information for a handful of Edm types.
+Notably the date types are not yet implemented.
+Type definition guidelines can be found [here][OASIS]
+OASIS: <a href="http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/odata-json-csdl-v4.0-csprd01.html#_Toc441572996">http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/odata-json-csdl-v4.0-csprd01.html#_Toc441572996</a></p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='entity/index.html'
+                                  title='odata::entity'>entity</a></td>
+                           <td class='docblock-short'>
+                                <p>This module includes core functionality needed for declaring EntityTypes
+and EntitySets</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='model/index.html'
+                                  title='odata::model'>model</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='service/index.html'
+                                  title='odata::service'>service</a></td>
+                           <td class='docblock-short'>
+                                <p>Provides the wrapper around hyper that is used for creating an OData
+service. </p>
+                           </td>
+                       </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.defEntity.html'
+                                  title='odata::defEntity'>defEntity</a></td>
+                           <td class='docblock-short'>
+                                <p>Declare a new EntityType, generating the metadata for use by the Model and Service class.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.defEntitySet.html'
+                                  title='odata::defEntitySet'>defEntitySet</a></td>
+                           <td class='docblock-short'>
+                                <p>defEntitySet!(name: ident, entity_type: ident)
+Defines a macro for declaring EntitySets. For instance, 
+<code>defEntitySet!(Dogs, Dog);</code>
+Declares an EntitySet named &quot;Dogs&quot; that consistes of elements
+of Entity Dog. CRUD-Q operations are then exposed via implementation of the
+EntitySet trait for struct. </p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.rust_type.html'
+                                  title='odata::rust_type'>rust_type</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "odata";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

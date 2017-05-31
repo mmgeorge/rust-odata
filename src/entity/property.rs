@@ -1,7 +1,7 @@
 
 use edm;
 
-/// Structure for holding property values for an Entity
+/// Internal structure for holding property values for an Entity
 pub struct Property {
     name: String,
     ptype: edm::Type,

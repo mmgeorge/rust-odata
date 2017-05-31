@@ -1,3 +1,6 @@
+//! This module includes core functionality needed for declaring EntityTypes
+//! and EntitySets
+
 
 #[macro_use] mod entity;
 #[macro_use] mod entity_set;

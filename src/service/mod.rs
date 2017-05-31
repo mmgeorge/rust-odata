@@ -1,3 +1,5 @@
+//! Provides the wrapper around hyper that is used for creating an OData
+//! service. 
 
 mod service;
 mod handler;
