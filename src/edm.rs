@@ -1,9 +1,10 @@
 //! This module includes type information for a handful of Edm types.
 //! Notably the date types are not yet implemented.
 //! Type definition guidelines can be found [here][OASIS]
-//! OASIS: http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/odata-json-csdl-v4.0-csprd01.html#_Toc441572996
+//! [OASIS]: http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/odata-json-csdl-v4.0-csprd01.html#_Toc441572996
 
 
+/// Internal macro. Converts Edm types to the underlying Rust type
 #[macro_export]
 macro_rules! rust_type {
     (Binary) => { Vec<bool> };
@@ -17,7 +18,7 @@ macro_rules! rust_type {
     (String) => { String };
 }
 
-
+/// An Edm type
 pub enum Type {
     Binary, 
     Boolean,
@@ -37,6 +38,7 @@ pub enum Type {
     //Time: Timespan
 }
 
+/// Matches a string to the Edm type to which it references
 pub fn from(s : &str) -> Type
 {
     match s {
@@ -54,6 +56,7 @@ pub fn from(s : &str) -> Type
 }
 
 
+/// Returns the underlying types for a given Edm type (I know... see standard!)
 pub fn ty (ty : &Type) -> Vec<&str> {
     match ty {
         &Type::Binary => vec!["string"],
@@ -69,6 +72,7 @@ pub fn ty (ty : &Type) -> Vec<&str> {
 }
 
 
+/// Returns the underlying format for a given Edm type (I know... see standard!)
 pub fn format (ty : &Type) -> &str {
     match ty {
         &Type::Binary => "base64url",

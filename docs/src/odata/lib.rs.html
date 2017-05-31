@@ -129,7 +129,7 @@
 
 <span class='doccomment'>//! ## Usage Overview </span>
 <span class='doccomment'>//! The library can be used to build REST API based using the [Entity Data Model][EDM]. EntityTypes and EntitySets are declared using macros which provide additional information used to generate metadata and create resource paths. For instance, we can declare a Game EntityType</span>
-<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! // Creates a new Game struct and generates serveral methods used internally</span>
 <span class='doccomment'>//! defEntity!(Game(keys =&gt; id) {</span>
 <span class='doccomment'>//!     id: Int64,</span>
@@ -142,13 +142,13 @@
 <span class='doccomment'>//! });</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! and and EntitySet Games which consists of these types. </span>
-<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! /// Declares Games as an EntitySet containing entities of type Game. Once added to</span>
 <span class='doccomment'>//! /// the model, it will be reachable via &lt;...&gt;/Games(I) </span>
 <span class='doccomment'>//! defEntitySet!(Games, Game);</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! Now we can implemented CRUD operations for our sevice via the `EntitySet` trait:</span>
-<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//!  fn create(&amp;self, value: serde_json::Value) -&gt; Res { ... } </span>
 <span class='doccomment'>//!  fn read(&amp;self, key: String) -&gt; Res { ... } </span>
 <span class='doccomment'>//!  fn read_list(&amp;self) -&gt; Res { ... } </span>
@@ -156,7 +156,7 @@
 <span class='doccomment'>//!  fn delete ...</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! The EntitySet trait provides a default implementation for these methods, meaning that we only need to directly implement those that we plan on using. Lastly we need to instantiate the `model` using our `EntitySet` (here we only have one), as well as declare the name of our service and start listening for requests. </span>
-<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//! ```rust</span>
 <span class='doccomment'>//! let model = ModelBuilder::new(&quot;connect_four.svc&quot;)</span>
 <span class='doccomment'>//!     .add(Games::declare())</span>
 <span class='doccomment'>//!     .build()</span>
@@ -168,7 +168,7 @@
 <span class='doccomment'>//! svc.start();</span>
 <span class='doccomment'>//! ```</span>
 <span class='doccomment'>//! Now our clients can access our API using `&lt;hostname:port&gt;/api/connect_four.svc` to, for example, get a list of games by going to `&lt;hostname:port&gt;/api/connect_four.svc/Games`</span>
-
+<span class='doccomment'>//!</span>
 <span class='doccomment'>//! [EDM]: https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx</span>
 <span class='doccomment'>//! [GSERVE]: https://github.com/mmgeorge/game_server</span>
 <span class='doccomment'>//! [ODATA]: http://www.odata.org</span>

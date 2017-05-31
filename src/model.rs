@@ -1,3 +1,5 @@
+//! Provides the Model class which is used to instantiate EntitySets and their underlying
+//! types
 
 use std::marker::Sync;
 use std::collections::HashMap;
@@ -10,9 +12,9 @@ use service::Res;
 /// Trait object for accessing both an EntitySet's descriptor and CRUD-Q implementation
 pub type EsEntry = (Box<EntitySetDescr>, Box<EntitySet>); 
 
-/// Registry for storing metadata for each included
-/// EntitySet. Keys denote EntitySets, Values each EntitySets'
-/// respective properties.
+/// Registry for storing metadata for each included EntitySet. Constructed using a
+/// ModelBuilder
+// Keys denote EntitySets, Values each EntitySets' respective properties.
 pub struct Model {
     name: String,
     registry: Vec<EsEntry>, 
@@ -104,7 +106,7 @@ impl Model {
     }
 }
 
-
+/// Used to construct a Model
 pub struct ModelBuilder {
     name: String,
     registry: Vec<EsEntry>,

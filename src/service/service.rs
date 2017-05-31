@@ -17,7 +17,7 @@ pub struct Service {
 
 impl Service {
 
-    /// Begin accepting requests. 
+    /// Start accepting requests. 
     pub fn start(&self)
     {
         // let test = "helloworld";
@@ -39,6 +39,7 @@ pub struct ServiceBuilder {
 
 
 impl ServiceBuilder {
+    /// Creates a new ServiceBuilder to build a Service with the passed name
     pub fn new(name: &str) -> ServiceBuilder
     {
         ServiceBuilder {
@@ -47,14 +48,14 @@ impl ServiceBuilder {
         }
     }
 
-
+    /// Add a model to the service.
     pub fn add(mut self, model: Model) -> Self
     {
         self.models.insert(String::from(model.get_name()), model);
         self
     }
-
-
+    
+    /// Construct the service
     pub fn build(self) -> Service
     {
         Service {

@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Type",""]],"fn":[["format",""],["from",""],["ty",""]]});
+initSidebarItems({"enum":[["Type","An Edm type"]],"fn":[["format","Returns the underlying format for a given Edm type (I know... see standard!)"],["from","Matches a string to the Edm type to which it references"],["ty","Returns the underlying types for a given Edm type (I know... see standard!)"]]});

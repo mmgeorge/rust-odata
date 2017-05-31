@@ -59,13 +59,13 @@ This library is referenced and utilized by the <a href="https://github.com/eecs3
 
 <h2 id='usage-overview' class='section-header'><a href='#usage-overview'>Usage Overview</a></h2>
 <p>The library can be used to build REST API based using the <a href="https://msdn.microsoft.com/en-us/library/ee382825(v=vs.110).aspx">Entity Data Model</a>. EntityTypes and EntitySets are declared using macros which provide additional information used to generate metadata and create resource paths. For instance, we can declare a Game EntityType
-<code>// Creates a new Game struct and generates serveral methods used internally defEntity!(Game(keys =&gt; id) { id: Int64, width: Int64, height: Int64, k: Int16, curr_player: Int16, status: String, board: String });</code>
+<code>rust // Creates a new Game struct and generates serveral methods used internally defEntity!(Game(keys =&gt; id) { id: Int64, width: Int64, height: Int64, k: Int16, curr_player: Int16, status: String, board: String });</code>
 and and EntitySet Games which consists of these types. 
-<code>/// Declares Games as an EntitySet containing entities of type Game. Once added to /// the model, it will be reachable via &lt;...&gt;/Games(I) defEntitySet!(Games, Game);</code>
+<code>rust /// Declares Games as an EntitySet containing entities of type Game. Once added to /// the model, it will be reachable via &lt;...&gt;/Games(I) defEntitySet!(Games, Game);</code>
 Now we can implemented CRUD operations for our sevice via the <code>EntitySet</code> trait:
-<code>fn create(&amp;self, value: serde_json::Value) -&gt; Res { ... } fn read(&amp;self, key: String) -&gt; Res { ... } fn read_list(&amp;self) -&gt; Res { ... } fn update ... fn delete ...</code>
+<code>rust fn create(&amp;self, value: serde_json::Value) -&gt; Res { ... } fn read(&amp;self, key: String) -&gt; Res { ... } fn read_list(&amp;self) -&gt; Res { ... } fn update ... fn delete ...</code>
 The EntitySet trait provides a default implementation for these methods, meaning that we only need to directly implement those that we plan on using. Lastly we need to instantiate the <code>model</code> using our <code>EntitySet</code> (here we only have one), as well as declare the name of our service and start listening for requests. 
-```
+```rust
 let model = ModelBuilder::new(&quot;connect_four.svc&quot;)
     .add(Games::declare())
     .build()</p>
@@ -85,8 +85,7 @@ let model = ModelBuilder::new(&quot;connect_four.svc&quot;)
                            <td class='docblock-short'>
                                 <p>This module includes type information for a handful of Edm types.
 Notably the date types are not yet implemented.
-Type definition guidelines can be found [here][OASIS]
-OASIS: <a href="http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/odata-json-csdl-v4.0-csprd01.html#_Toc441572996">http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/odata-json-csdl-v4.0-csprd01.html#_Toc441572996</a></p>
+Type definition guidelines can be found <a href="http://docs.oasis-open.org/odata/odata-json-csdl/v4.0/csprd01/odata-json-csdl-v4.0-csprd01.html#_Toc441572996">here</a></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -101,7 +100,8 @@ and EntitySets</p>
                            <td><a class='mod' href='model/index.html'
                                   title='odata::model'>model</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Provides the Model class which is used to instantiate EntitySets and their underlying
+types</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -136,7 +136,7 @@ EntitySet trait for struct. </p>
                            <td><a class='macro' href='macro.rust_type.html'
                                   title='odata::rust_type'>rust_type</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Internal macro. Converts Edm types to the underlying Rust type</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
