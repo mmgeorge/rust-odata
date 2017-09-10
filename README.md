@@ -1,4 +1,5 @@
-#### This repository is outdated and maintains an old version of this project for compatibility with the [Connect Four][CONNECTFOUR] library which depends on it. As major revisions are planned, future development [has been moved](https://github.com/mmgeorge/odata-rs). 
+#### ~~This repository is outdated and maintains an old version of this project for compatibility with the [Connect Four][CONNECTFOUR] library which depends on it. As major revisions are planned, future development [has been moved](https://github.com/mmgeorge/odata-rs).~~
+On indefinite hold. 
 
 # rust-odata
 Rust oData is library for building [OData][ODATA] REST services in Rust.
