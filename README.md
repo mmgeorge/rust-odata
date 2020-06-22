@@ -1,3 +1,4 @@
+![rust oData logo](./images/logoRustOdata200x200.svg)
 # rust-odata
 Rust oData is library for building [OData][ODATA] REST services in Rust.
 This library is referenced and utilized by the [ConnectFour][CONNECTFOUR] project in the [game_server][GSERVE] repository for service generation.
